@@ -1,13 +1,13 @@
-package com.example.eCar;
+package com.example.ecar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ECarApplication {
+public class EcarApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ECarApplication.class, args);
+		SpringApplication.run(EcarApplication.class, args);
 	}
 
 }

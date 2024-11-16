@@ -1,7 +1,7 @@
-package com.example.eCar.Models;
+package com.example.ecar.model;
 
 public class Client {
-
+	
 	private int id;
 	private int afm;
 	private String name;
@@ -66,7 +66,6 @@ public class Client {
 	public void setCreds(Credentials creds) {
 		this.creds = creds;
 	}
-	
 	
 
 }
