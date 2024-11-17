@@ -1,5 +1,7 @@
 package com.example.ecar.model;
 
+import java.util.ArrayList;
+
 public class Car {
 
 	private int id;
@@ -12,11 +14,26 @@ public class Car {
 	private String info;
 	private int amount;
 	private CarDealership carDealership;
-
+	
+	
+	//contructor for existing cars with DB id
 	public Car(int id, String brand, String model, String fuel, String engine, int seats, double price, String info,
 			int amount, CarDealership carDealership) {
 		super();
 		this.setId(id);
+		this.setBrand(brand);
+		this.setModel(model);
+		this.setFuel(fuel);
+		this.setEngine(engine);
+		this.setSeats(seats);
+		this.setInfo(info);
+		this.setAmmount(amount);
+		this.setCarDealership(carDealership);
+	}
+
+	//constructor for crating new cars without auto incremented id
+	public Car(String brand, String model, String fuel, String engine, int seats, double price, String info,
+			int amount, CarDealership carDealership) {
 		this.setBrand(brand);
 		this.setModel(model);
 		this.setFuel(fuel);
