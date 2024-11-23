@@ -10,31 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecar.model.CarDealership;
-import com.example.ecar.service.InitService;
+import com.example.ecar.service.ClientService;
+import com.example.ecar.service.DealerService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ClientController {
 
 	@Autowired
-	private InitService service;
+	private ClientService service;
 
-	// http://localhost:8080/addCar?brand={brand}&model={model}&...
-	@GetMapping(path = "/addCar")
-	public void addCar(@RequestParam(value = "brand") String brand, @RequestParam(value = "model") String model,
-			@RequestParam(value = "fuel") String fuel, @RequestParam(value = "engine") String engine,
-			@RequestParam(value = "seats") int seats, @RequestParam(value = "price") double price,
-			@RequestParam(value = "info") String info, @RequestParam(value = "amount") int amount,
-			@RequestParam(value = "carDealership") CarDealership carDealership) {
-
-		service.addCar(brand, model, fuel, engine, seats, price, info, amount, carDealership);
-
-	}
 	
-	// http://localhost:8080/viewCars?dealership={dealershipID}
-	@GetMapping(path= "/viewCars")
-	public void  viewCars(@RequestParam(value="dealership") int id) {
-		
-	}
+	
+
 
 }

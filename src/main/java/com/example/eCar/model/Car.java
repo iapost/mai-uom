@@ -31,7 +31,7 @@ public class Car {
 		this.setCarDealership(carDealership);
 	}
 
-	//constructor for crating new cars without auto incremented id
+	//constructor for creating new cars with auto incremented id
 	public Car(String brand, String model, String fuel, String engine, int seats, double price, String info,
 			int amount, CarDealership carDealership) {
 		this.setBrand(brand);
@@ -43,6 +43,8 @@ public class Car {
 		this.setAmmount(amount);
 		this.setCarDealership(carDealership);
 	}
+	
+
 
 	public int getId() {
 		return id;
