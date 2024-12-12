@@ -1,12 +1,22 @@
 package com.example.ecar.model;
+import javax.persistence.*;
 
+@Entity
 public class Credentials {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String username;
 	private String password;
 	private int role;
 
+	public Credentials() {
+		this.id = 0;
+		this.username = "";
+		this.password = "";
+		this.role = 0;
+		
+	}
 	public Credentials(int id, String username, String password, int role) {
 		super();
 		this.setId(id);

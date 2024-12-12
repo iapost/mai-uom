@@ -2,10 +2,13 @@ package com.example.ecar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecar.model.Client;
+import com.example.ecar.model.Credentials;
+import com.example.ecar.model.Dealership;
 import com.example.ecar.service.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -13,32 +16,40 @@ import com.example.ecar.service.UserService;
 public class UserController {
 
 	@Autowired
-	public UserService service;
+	public UserService userService;
 
-	@GetMapping(path = "/login")
-	public void login(@RequestParam(value = "username") String username,
-			@RequestParam(value = "password") String password) throws Exception {
+	@PostMapping(path = "/login")
+	public void login(@RequestBody Credentials creds) throws Exception {
 
-		service.login(username, password);
-
-	}
-
-	@GetMapping(path = "/registerDealer")
-	public void registerDealer(@RequestParam(value = "username") String username,
-			@RequestParam(value = "password") String password) {
+		userService.login(creds);
 
 	}
 
-	@GetMapping(path = "/clientRegister")
-	public void clientRegister(@RequestParam(value = "name") String name,
-			@RequestParam(value = "surname") String surname, @RequestParam(value = "afm") String afm,
-			@RequestParam(value = "email") String email, @RequestParam(value = "username") String username,
-			@RequestParam(value = "password") String password) throws Exception {
+	@PostMapping(path = "/clientRegister")
+	public void clientRegister(@RequestBody Credentials creds) throws Exception {
 
-		int role = 1;
-		int creds_id = service.credentialRegister(username, password, role);
-		
-		service.clientRegister(name, surname, afm, email, creds_id);
+		userService.credentialRegister(creds);
+
+	}
+
+	@PostMapping(path = "/clientCreation")
+	public void clientCreation(@RequestBody Client client) throws Exception {
+
+		userService.clientCreation(client);
+
+	}
+
+	@PostMapping(path = "/dealershipRegister")
+	public void dealershipRegister(@RequestBody Credentials creds) throws Exception {
+
+		userService.credentialRegister(creds);
+
+	}
+
+	@PostMapping(path = "/dealershipCreation")
+	public void dealershipCreation(@RequestBody Dealership dealer) throws Exception {
+
+		userService.dealershipCreation(dealer);
 
 	}
 

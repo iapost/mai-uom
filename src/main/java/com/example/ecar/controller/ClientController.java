@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecar.model.CarDealership;
+import com.example.ecar.model.Dealership;
 import com.example.ecar.service.ClientService;
-import com.example.ecar.service.DealerService;
+import com.example.ecar.service.DealershipService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

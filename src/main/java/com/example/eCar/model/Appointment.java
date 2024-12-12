@@ -1,16 +1,24 @@
 package com.example.ecar.model;
+import javax.persistence.*;
 
+
+@Entity
 public class Appointment {
 
+	@Id
 	private int id;
 	private String time;
 	private String date;
 	private String reason;
 	private Client client;
-	private CarDealership carDealership;
+	private Dealership dealership;
 	private Car car;
+	
+	public Appointment() {
+		
+	}
 
-	public Appointment(int id, String time, String date, String reason, Client client, CarDealership carDealership,
+	public Appointment(int id, String time, String date, String reason, Client client, Dealership carDealership,
 			Car car) {
 		super();
 		this.setId(id);
@@ -62,12 +70,12 @@ public class Appointment {
 		this.client = client;
 	}
 
-	public CarDealership getCarDealership() {
-		return carDealership;
+	public Dealership getCarDealership() {
+		return dealership;
 	}
 
-	public void setCarDealership(CarDealership carDealership) {
-		this.carDealership = carDealership;
+	public void setCarDealership(Dealership carDealership) {
+		this.dealership = carDealership;
 	}
 
 	public Car getCar() {

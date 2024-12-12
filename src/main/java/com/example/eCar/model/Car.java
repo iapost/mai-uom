@@ -1,9 +1,11 @@
 package com.example.ecar.model;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity
 public class Car {
 
+	@Id
 	private int id;
 	private String brand;
 	private String model;
@@ -13,12 +15,16 @@ public class Car {
 	private double price;
 	private String info;
 	private int amount;
-	private CarDealership carDealership;
+	//private CarDealership carDealership;
 	
+	
+	public Car() {
+		
+	}
 	
 	//contructor for existing cars with DB id
 	public Car(int id, String brand, String model, String fuel, String engine, int seats, double price, String info,
-			int amount, CarDealership carDealership) {
+			int amount) {
 		super();
 		this.setId(id);
 		this.setBrand(brand);
@@ -28,12 +34,12 @@ public class Car {
 		this.setSeats(seats);
 		this.setInfo(info);
 		this.setAmmount(amount);
-		this.setCarDealership(carDealership);
+		//this.setCarDealership(carDealership);
 	}
 
 	//constructor for creating new cars with auto incremented id
 	public Car(String brand, String model, String fuel, String engine, int seats, double price, String info,
-			int amount, CarDealership carDealership) {
+			int amount) {
 		this.setBrand(brand);
 		this.setModel(model);
 		this.setFuel(fuel);
@@ -41,7 +47,7 @@ public class Car {
 		this.setSeats(seats);
 		this.setInfo(info);
 		this.setAmmount(amount);
-		this.setCarDealership(carDealership);
+		//this.setCarDealership(carDealership);
 	}
 	
 
@@ -118,12 +124,12 @@ public class Car {
 		this.amount = amount;
 	}
 
-	public CarDealership getCarDealership() {
-		return carDealership;
-	}
-
-	public void setCarDealership(CarDealership carDealership) {
-		this.carDealership = carDealership;
-	}
+//	public CarDealership getCarDealership() {
+//		return carDealership;
+//	}
+//
+//	public void setCarDealership(CarDealership carDealership) {
+//		this.carDealership = carDealership;
+//	}
 
 }

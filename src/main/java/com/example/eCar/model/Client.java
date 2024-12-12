@@ -1,13 +1,19 @@
 package com.example.ecar.model;
+import javax.persistence.*;
 
+@Entity
 public class Client {
-	
+	@Id
 	private int id;
 	private int afm;
 	private String name;
 	private String surname;
 	private String email;
 	private Credentials creds;
+	
+	public Client() {
+		
+	}
 	
 	public Client(int id, int afm, String name, String surname, String email, Credentials creds) {
 		super();

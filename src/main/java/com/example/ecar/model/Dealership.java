@@ -1,14 +1,21 @@
 package com.example.ecar.model;
+import javax.persistence.*;
 
-public class CarDealership {
+@Entity
+public class Dealership {
 
+	@Id
 	private int id;
 	private int afm;
 	private String name;
 	private String owner;
 	private Credentials creds;
+	
+	public Dealership() {
+		
+	}
 
-	public CarDealership(int id, int afm, String name, String owner, Credentials creds) {
+	public Dealership(int id, int afm, String name, String owner, Credentials creds) {
 		super();
 		this.setId(id);
 		this.setAfm(afm);
