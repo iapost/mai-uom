@@ -1,5 +1,7 @@
 package com.example.ecar.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,17 @@ public class UserController {
 		Credentials verifiedCreds = userService.login(attemtedCreds);
 		return verifiedCreds;
 	}
-	
 
+	// localhost:8080/clientRegister
+	@PostMapping(path = "/clientRegister")
+	public void clientRegister(@RequestBody Map<String, Object> requestBody) {
+		userService.clientRegister(requestBody);
+	}
+
+	// localhost:8080/dealerRegister
+	@PostMapping(path = "/dealerRegister")
+	public void dealerRegister(@RequestBody Map<String, Object> requestBody) {
+		userService.dealershipRegister(requestBody);
+	}
 
 }

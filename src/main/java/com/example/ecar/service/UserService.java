@@ -1,11 +1,15 @@
 package com.example.ecar.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecar.model.Client;
 import com.example.ecar.model.Credentials;
+import com.example.ecar.model.Dealership;
 import com.example.ecar.repos.ClientRepository;
 import com.example.ecar.repos.CredentialsRepository;
 import com.example.ecar.repos.DealershipRepository;
@@ -15,10 +19,10 @@ public class UserService {
 
 	@Autowired
 	private CredentialsRepository credsRepo;
-	
+
 	@Autowired
 	private ClientRepository clientRepo;
-	
+
 	@Autowired
 	private DealershipRepository dealershipRepo;
 
@@ -40,6 +44,56 @@ public class UserService {
 		}
 
 		return verifiedCreds;
+	}
+
+	public void clientRegister(Map<String, Object> requestBody) {
+
+		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");
+		Credentials creds = new Credentials();
+		creds.setUsername((String) credentialMap.get("username"));
+		creds.setPassword((String) credentialMap.get("password"));
+		creds.setRole(Integer.parseInt(credentialMap.get("role").toString()));
+		
+		Optional<Credentials> byId = credsRepo.findById(creds.getId());
+		if (!byId.isPresent())
+			credsRepo.save(creds);
+
+		Map<String, Object> clientMap = (Map<String, Object>) requestBody.get("client");
+		Client client = new Client();
+		client.setAfm(Integer.parseInt(clientMap.get("afm").toString()));
+		client.setFname((String) clientMap.get("fname"));
+		client.setSname((String) clientMap.get("sname"));
+		client.setEmail((String) clientMap.get("email"));
+		client.setCreds(creds);
+		
+		Optional<Client> byId2 = clientRepo.findById(client.getId());
+		if (!byId2.isPresent())
+			clientRepo.save(client);
+
+	}
+
+	public void dealershipRegister(Map<String, Object> requestBody) {
+
+		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");
+		Credentials creds = new Credentials();
+		creds.setUsername((String) credentialMap.get("username"));
+		creds.setPassword((String) credentialMap.get("password"));
+		creds.setRole(Integer.parseInt(credentialMap.get("role").toString()));
+
+		Optional<Credentials> byId = credsRepo.findById(creds.getId());
+		if (!byId.isPresent())
+			credsRepo.save(creds);
+
+		Map<String, Object> dealershipMap = (Map<String, Object>) requestBody.get("dealership");
+		Dealership dealership = new Dealership();
+		dealership.setAfm(Integer.parseInt(dealershipMap.get("afm").toString()));
+		dealership.setName((String) dealershipMap.get("name"));
+		dealership.setOwner((String) dealershipMap.get("owner"));
+		dealership.setCredentials(creds);
+
+		Optional<Dealership> byId2 = dealershipRepo.findById(dealership.getId());
+		if (!byId2.isPresent())
+			dealershipRepo.save(dealership);
 	}
 
 }
