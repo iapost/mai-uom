@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecar.model.Client;
 import com.example.ecar.model.Credentials;
-import com.example.ecar.model.Dealership;
 import com.example.ecar.service.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -16,41 +14,15 @@ import com.example.ecar.service.UserService;
 public class UserController {
 
 	@Autowired
-	public UserService userService;
+	private UserService userService;
 
+	// localhost:8080/login
 	@PostMapping(path = "/login")
-	public void login(@RequestBody Credentials creds) throws Exception {
-
-		userService.login(creds);
-
+	public Credentials login(@RequestBody Credentials attemtedCreds) throws Exception {
+		Credentials verifiedCreds = userService.login(attemtedCreds);
+		return verifiedCreds;
 	}
+	
 
-	@PostMapping(path = "/clientRegister")
-	public void clientRegister(@RequestBody Credentials creds) throws Exception {
-
-		userService.credentialRegister(creds);
-
-	}
-
-	@PostMapping(path = "/clientCreation")
-	public void clientCreation(@RequestBody Client client) throws Exception {
-
-		userService.clientCreation(client);
-
-	}
-
-	@PostMapping(path = "/dealershipRegister")
-	public void dealershipRegister(@RequestBody Credentials creds) throws Exception {
-
-		userService.credentialRegister(creds);
-
-	}
-
-	@PostMapping(path = "/dealershipCreation")
-	public void dealershipCreation(@RequestBody Dealership dealer) throws Exception {
-
-		userService.dealershipCreation(dealer);
-
-	}
 
 }

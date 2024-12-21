@@ -1,27 +1,53 @@
 package com.example.ecar.model;
-import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Dealership {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// gia auto increment id
 	private int id;
 	private int afm;
 	private String name;
 	private String owner;
-	private Credentials creds;
-	
+
+	// sxesi 1-1 me ton pinaka credentials
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "credentials_id", referencedColumnName = "id")
+	private Credentials credentials;
+
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Car> cars = new ArrayList<Car>();
+
 	public Dealership() {
-		
+
 	}
 
-	public Dealership(int id, int afm, String name, String owner, Credentials creds) {
-		super();
-		this.setId(id);
+	public Dealership(int afm, String name, String owner) {
 		this.setAfm(afm);
 		this.setName(name);
 		this.setOwner(owner);
-		this.setCreds(creds);
+	}
+	
+	public void setCredentials(Credentials creds) {
+		this.credentials = creds;
+	}
+
+	public void addCar(Car car) {
+		cars.add(car);
 	}
 
 	public int getId() {
@@ -56,11 +82,4 @@ public class Dealership {
 		this.owner = owner;
 	}
 
-	public Credentials getCreds() {
-		return creds;
-	}
-
-	public void setCreds(Credentials creds) {
-		this.creds = creds;
-	}
 }

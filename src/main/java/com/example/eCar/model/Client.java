@@ -1,38 +1,65 @@
 package com.example.ecar.model;
-import javax.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Client {
+public class Client{
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//gia auto incement id
 	private int id;
 	private int afm;
-	private String name;
-	private String surname;
+	private String fname;
+	private String sname;
 	private String email;
-	private Credentials creds;
 	
+	//sxesi 1-1 me ton pinaka credentials
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="credentials_id", referencedColumnName = "id")
+	private Credentials credentials;
+	
+	//sxesi N-N me ton pinaka Car. Stin ousia dimiourgia pinaka Appointment
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name="appointment", 
+			   joinColumns = @JoinColumn(name="client_id"),
+			   inverseJoinColumns = @JoinColumn(name="car_id"))
+	private Set<Car> cars = new HashSet<Car>();
+
+
 	public Client() {
-		
+
+	}
+
+	public Client(int afm, String fname, String sname, String email) {
+		this.setAfm(afm);
+		this.setFname(fname);
+		this.setSname(sname);
+		this.setEmail(email);
 	}
 	
-	public Client(int id, int afm, String name, String surname, String email, Credentials creds) {
-		super();
-		this.setId(id);
-		this.setAfm(afm);
-		this.setName(name);
-		this.setSurname(surname);
-		this.setEmail(email);
-		this.setCreds(creds);
+	public void setCreds(Credentials creds) {
+		this.credentials = creds;
 	}
 
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public int getAfm() {
 		return afm;
 	}
@@ -41,20 +68,20 @@ public class Client {
 		this.afm = afm;
 	}
 
-	public String getName() {
-		return name;
+	public String getFname() {
+		return fname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getSname() {
+		return sname;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setSname(String sname) {
+		this.sname = sname;
 	}
 
 	public String getEmail() {
@@ -64,14 +91,5 @@ public class Client {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Credentials getCreds() {
-		return creds;
-	}
-
-	public void setCreds(Credentials creds) {
-		this.creds = creds;
-	}
-	
 
 }

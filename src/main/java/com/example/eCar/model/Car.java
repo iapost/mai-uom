@@ -1,56 +1,56 @@
 package com.example.ecar.model;
 
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Car {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// gia auto incement id
 	private int id;
 	private String brand;
 	private String model;
 	private String fuel;
-	private String engine;
+	private int engine;
 	private int seats;
 	private double price;
 	private String info;
 	private int amount;
-	//private CarDealership carDealership;
-	
-	
+	@ManyToMany(mappedBy = "cars")
+	private Set<Client> clients = new HashSet<Client>();
+
+	@ManyToOne
+	@JoinColumn(name = "dealership_id")
+	private Dealership dealership;
+
 	public Car() {
-		
+
 	}
-	
-	//contructor for existing cars with DB id
-	public Car(int id, String brand, String model, String fuel, String engine, int seats, double price, String info,
-			int amount) {
-		super();
-		this.setId(id);
+
+	public Car(String brand, String model, String fuel, int engine, int seats, double price, String info, int amount) {
 		this.setBrand(brand);
 		this.setModel(model);
 		this.setFuel(fuel);
 		this.setEngine(engine);
 		this.setSeats(seats);
+		this.setPrice(price);
 		this.setInfo(info);
-		this.setAmmount(amount);
-		//this.setCarDealership(carDealership);
+		this.setAmount(amount);
 	}
 
-	//constructor for creating new cars with auto incremented id
-	public Car(String brand, String model, String fuel, String engine, int seats, double price, String info,
-			int amount) {
-		this.setBrand(brand);
-		this.setModel(model);
-		this.setFuel(fuel);
-		this.setEngine(engine);
-		this.setSeats(seats);
-		this.setInfo(info);
-		this.setAmmount(amount);
-		//this.setCarDealership(carDealership);
+	public void setDealership(Dealership dealership) {
+		this.dealership = dealership;
 	}
-	
-
 
 	public int getId() {
 		return id;
@@ -76,11 +76,19 @@ public class Car {
 		this.model = model;
 	}
 
-	public String getEngine() {
+	public String getFuel() {
+		return fuel;
+	}
+
+	public void setFuel(String fuel) {
+		this.fuel = fuel;
+	}
+
+	public int getEngine() {
 		return engine;
 	}
 
-	public void setEngine(String engine) {
+	public void setEngine(int engine) {
 		this.engine = engine;
 	}
 
@@ -100,14 +108,6 @@ public class Car {
 		this.price = price;
 	}
 
-	public String getFuel() {
-		return fuel;
-	}
-
-	public void setFuel(String fuel) {
-		this.fuel = fuel;
-	}
-
 	public String getInfo() {
 		return info;
 	}
@@ -116,20 +116,12 @@ public class Car {
 		this.info = info;
 	}
 
-	public int getAmmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmmount(int amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-
-//	public CarDealership getCarDealership() {
-//		return carDealership;
-//	}
-//
-//	public void setCarDealership(CarDealership carDealership) {
-//		this.carDealership = carDealership;
-//	}
 
 }

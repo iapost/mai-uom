@@ -1,36 +1,38 @@
 package com.example.ecar.model;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Credentials {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// gia auto incement id
 	private int id;
 	private String username;
 	private String password;
 	private int role;
 
+	// sxesi 1-1 me ton pinaka client
+	@OneToOne(mappedBy = "credentials")
+	private Client client;
+
+	// sxesi 1-1 me ton pinaka dealership
+	@OneToOne(mappedBy = "credentials")
+	private Dealership dealership;
+
 	public Credentials() {
-		this.id = 0;
-		this.username = "";
-		this.password = "";
-		this.role = 0;
-		
-	}
-	public Credentials(int id, String username, String password, int role) {
-		super();
-		this.setId(id);
-		this.setUsername(username);
-		this.setPassword(password);
-		this.setRole(role);
+
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public Credentials(String username, String password, int role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
 	}
 
 	public String getUsername() {

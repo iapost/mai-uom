@@ -1,38 +1,33 @@
 package com.example.ecar.service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecar.model.Car;
-import com.example.ecar.model.Dealership;
+import com.example.ecar.repos.CarRepository;
+import com.example.ecar.repos.DealershipRepository;
 
 @Service
 public class DealershipService {
-
-	List<Car> carList = new ArrayList<Car>();
-
-	public void addCar(Car car) {
-
-
-		// pare auto to car kai steilto stin DB me to id tou sigkekrimenou dealeship
-
+	
+	@Autowired
+	private CarRepository carRepo;
+	@Autowired
+	private DealershipRepository dealerRepo;
+	
+	
+	//thelei na krataei kai to id tou dealer gia na prostethei kai stin lista tou, oxi mono sto repo tou car
+	public void addCar(Car car) throws Exception {
+		Optional<Car> byId = carRepo.findById(car.getId());
+		if(!byId.isPresent())
+			carRepo.save(car);
 	}
-
-	public ArrayList<Car> viewCars(int id) throws Exception {
-
-			//pare ola ta cars kai kanta view
-
-		return carList;
-
+	
+	//den ksero an autow o tropow einai sostos
+	public Car viewCar(Car car) throws Exception{
+		return car;
 	}
-
-
 
 }
