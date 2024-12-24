@@ -45,7 +45,8 @@ public class UserService {
 
 		return verifiedCreds;
 	}
-
+	
+	
 	public void clientRegister(Map<String, Object> requestBody) {
 
 		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");
