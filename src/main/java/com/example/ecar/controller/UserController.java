@@ -32,8 +32,8 @@ public class UserController {
 	}
 
 	// localhost:8080/dealerRegister
-	@PostMapping(path = "/dealerRegister")
-	public void dealerRegister(@RequestBody Map<String, Object> requestBody) {
+	@PostMapping(path = "/dealershipRegister")
+	public void dealershipRegister(@RequestBody Map<String, Object> requestBody) {
 		userService.dealershipRegister(requestBody);
 	}
 

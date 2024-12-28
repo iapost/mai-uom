@@ -34,14 +34,11 @@ public class DealershipService {
 			carRepo.save(car);
 	}
 	
-	//den ksero an autow o tropow einai sostos
-	public Car viewCar(Car car) throws Exception{
-		return car;
-	}
 	
-	//den ksero an autow o tropow einai sostos
-		public Car editCar(Car car) throws Exception{
-			return car;
+	//pairnoyme ena anatheorimeno car kai epeidi sto request exoume kai to id, tote me to aplo save katalavainei kai kanei update
+		public Car updateCar(Car updatedCar){
+			return carRepo.save(updatedCar);
+			
 		}
 		
 		public void addDealership(Dealership dealership) throws Exception{

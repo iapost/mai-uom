@@ -26,6 +26,7 @@ public class Car {
 	private double price;
 	private String info;
 	private int amount;
+	
 	@ManyToMany(mappedBy = "cars")
 	private Set<Client> clients = new HashSet<Client>();
 
