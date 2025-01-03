@@ -29,6 +29,7 @@ public class Dealership {
 	@JoinColumn(name = "credentials_id", referencedColumnName = "id")
 	private Credentials credentials;
 
+	//sxesi 1-N me ton pinaka cars
 	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Car> cars = new ArrayList<Car>();
 
@@ -80,6 +81,10 @@ public class Dealership {
 
 	public void setOwner(String owner) {
 		this.owner = owner;
+	}
+	
+	public int getCredentialsId() {
+		return this.credentials.getId();
 	}
 
 }

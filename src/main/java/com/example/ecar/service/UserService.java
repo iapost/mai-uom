@@ -26,11 +26,12 @@ public class UserService {
 	@Autowired
 	private DealershipRepository dealershipRepo;
 
+	// OK
 	// sygkrinoume ta creds poy irthan me tin klisi tis mehtodou me ola ta creds pou
 	// yparxoun stin vasi. Se periptosi pou vrethei omoiotita epistrefetai olo to
 	// antikeimeno gia na eksetasei to front end ton rolo
 	// kai analoga na kanei redirect.
-	// Se periptosi pou einai lathos ta creds...
+	// TODO handle se periptosi lathous creds
 	public Credentials login(Credentials attemtedCreds) throws Exception {
 
 		List<Credentials> allCreds = credsRepo.findAll();
@@ -45,8 +46,47 @@ public class UserService {
 
 		return verifiedCreds;
 	}
-	
-	
+
+//	public Credentials login(Credentials attemtedCreds) throws Exception {
+//
+//		List<Credentials> allCreds = credsRepo.findAll();
+//		Credentials verifiedCreds = null;
+//		for (Credentials c : allCreds) {
+//			if (c.getUsername().equals(attemtedCreds.getUsername())
+//					&& c.getPassword().equals(attemtedCreds.getPassword())) {
+//				
+//				verifiedCreds = c;
+//				break;
+//			}
+//		}
+//
+//		return verifiedCreds;
+//	}
+
+	// dokimi with session, to check he userid
+	public int getUserId(int credsId) {
+
+		List<Client> allClients = clientRepo.findAll();
+		List<Dealership> allDealership = dealershipRepo.findAll();
+		int userId = 0;
+		for (Client c : allClients) {
+			if (credsId == c.getCredentialsId()) {
+				userId = c.getId();
+				break;
+			}
+		}
+
+		for (Dealership d : allDealership) {
+			if (credsId == d.getCredentialsId()) {
+				userId = d.getId();
+				break;
+			}
+		}
+
+		return userId;
+	}
+
+	// OK
 	public void clientRegister(Map<String, Object> requestBody) {
 
 		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");
@@ -54,7 +94,7 @@ public class UserService {
 		creds.setUsername((String) credentialMap.get("username"));
 		creds.setPassword((String) credentialMap.get("password"));
 		creds.setRole(Integer.parseInt(credentialMap.get("role").toString()));
-		
+
 		Optional<Credentials> byId = credsRepo.findById(creds.getId());
 		if (!byId.isPresent())
 			credsRepo.save(creds);
@@ -66,13 +106,14 @@ public class UserService {
 		client.setSname((String) clientMap.get("sname"));
 		client.setEmail((String) clientMap.get("email"));
 		client.setCreds(creds);
-		
+
 		Optional<Client> byId2 = clientRepo.findById(client.getId());
 		if (!byId2.isPresent())
 			clientRepo.save(client);
 
 	}
 
+	// OK
 	public void dealershipRegister(Map<String, Object> requestBody) {
 
 		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");

@@ -99,4 +99,7 @@ public class Client{
 		this.email = email;
 	}
 
+	public int getCredentialsId() {
+		return this.credentials.getId();
+	}
 }

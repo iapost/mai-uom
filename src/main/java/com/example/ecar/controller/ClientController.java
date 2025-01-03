@@ -30,17 +30,17 @@ public class ClientController {
 		return cService.searchCars(brand, model, fuel, price);
 
 	}
-	
+
 	// localhost:8080/client/getCars
-		@GetMapping(path = "/getCars")
-		public List<Car> getCars() throws Exception {
-			return cService.getCars();
-		}
-		
-		// localhost:8080/client/buyCar
-		@PostMapping(path = "/buyCar")
-		public void addCar(@RequestBody Car car) throws Exception {
-			cService.buyCar(car);
-		}
+	@GetMapping(path = "/getCars")
+	public List<Car> getCars() throws Exception {
+		return cService.getCars();
+	}
+
+	// localhost:8080/client/buyCar
+	@PostMapping(path = "/buyCar")
+	public void addCar(@RequestBody Car car) throws Exception {
+		cService.buyCar(car);
+	}
 
 }

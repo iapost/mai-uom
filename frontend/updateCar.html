@@ -1,0 +1,98 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<html>
+	<head>
+	</head>
+	<body>
+
+
+		<h1> Επιλεγμένο Αυτοκίνητο</h1>
+
+
+		<table>
+			<tr>
+				<td> Μάρκα: </td>
+				<td> <input type='text' id='brand' />
+			</tr>
+            <tr>
+				<td> Μοντέλο: </td>
+				<td> <input type='text' id='model' />
+			</tr>
+            <tr>
+				<td> Κινητήρας: </td>
+				<td> <input type='text' id='engine' />
+			</tr>
+            <tr>
+				<td> Καύσιμο: </td>
+				<td> <input type='text' id='fuel' />
+			</tr>
+            <tr>
+				<td> Θέσεις: </td>
+				<td> <input type='number' id='seats' />
+			</tr>
+            <tr>
+				<td> Πληροφορίες: </td>
+				<td> <input type='text' id='info' />
+			</tr>
+            <tr>
+				<td> Τιμή: </td>
+				<td> <input type='number' id='price' />
+			</tr>
+            <tr>
+				<td> Ποσότητα : </td>
+				<td> <input type='number' id='amount' />
+			</tr>
+
+		</table>
+		<p id="carId" style="display:none"></p>
+		<br><br>
+		<button onclick="updateCar();">Αποθήκευση</button>
+
+		<script>
+
+			document.addEventListener('DOMContentLoaded', function(){
+				var car = JSON.parse(localStorage.getItem('selectedCar'));
+				if(car){
+					document.getElementById('carId').innerHTML = car.id;
+					document.getElementById('brand').value = car.brand;
+					document.getElementById('model').value = car.model;
+					document.getElementById('fuel').value = car.fuel;
+					document.getElementById('engine').value = car.engine;
+					document.getElementById('seats').value = car.seats;
+					document.getElementById('info').value = car.info;
+					document.getElementById('price').value = car.price;
+					document.getElementById('amount').value = car.amount;
+				}
+			})
+		
+			function updateCar() {
+				var settings = {
+					"url": "http://localhost:8080/dealership/updateCar",
+					"method": "PUT",
+					"timeout": 0,
+					"headers": {
+					"Content-Type": "application/json"
+				  },
+				  "data": JSON.stringify({
+					"id" : document.getElementById("carId").innerHTML,
+					"brand" : document.getElementById("brand").value,
+					"model" : document.getElementById("model").value,
+					"fuel" : document.getElementById("fuel").value, 
+					"engine" : document.getElementById("engine").value,
+					"seats" : document.getElementById("seats").value,
+					"info" : document.getElementById("info").value, 
+					"price" : document.getElementById("price").value,
+					"amount" : document.getElementById("amount").value
+				  }),
+				};
+					
+				
+				$.ajax(settings).done(function (response) {
+					console.log("ok edited the car ");
+					window.location.href = 'dealershipHomePage.html';
+				});
+			};
+
+		</script>	
+	</body>
+</html>

@@ -21,13 +21,15 @@ public class DealershipController {
 
 	@Autowired
 	private DealershipService dService;
-
+	
+	
 	// localhost:8080/dealership/getCars
 	@GetMapping(path = "/getCars")
 	public List<Car> getCars() throws Exception {
 		return dService.getCars();
 	}
 
+	 
 	// localhost:8080/dealership/addCar
 	@PostMapping(path = "/addCar")
 	public void addCar(@RequestBody Car car) throws Exception {

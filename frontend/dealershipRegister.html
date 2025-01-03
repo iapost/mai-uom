@@ -1,0 +1,63 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<html>
+	<head>
+	</head>
+	<body>
+		<script>
+			function register() {				
+				var settings = {
+					"url": "http://localhost:8080/dealershipRegister",
+					"method": "POST",
+					"timeout": 0,
+					"headers": {
+					"Content-Type": "application/json"},
+					"data": JSON.stringify({
+						"credentials" : {
+							"username": document.getElementById("username").value,
+							"password": document.getElementById("password").value,
+							"role": "2"
+					},
+					"dealership" : {
+						"name": document.getElementById("name").value,
+						"owner": document.getElementById("owner").value,
+						"afm": document.getElementById("afm").value
+					}
+				  }),
+				};
+				$.ajax(settings).done(function (response) {
+					console.log("registration success");
+					window.location.href = "login.html";
+				});
+			}
+		
+		</script>	
+		<table>
+			<tr>
+				<td> Επωνυμία: </td>
+				<td> <input type='text' id='name' />
+			</tr>
+            <tr>
+				<td> ΑΦΜ: </td>
+				<td> <input type='text' id='afm' />
+			</tr>
+            <tr>
+				<td> Ιδιοκτήτης: </td>
+				<td> <input type='text' id='owner' />
+			</tr>
+            <tr>
+				<td> Username: </td>
+				<td> <input type='text' id='username' />
+			</tr>
+            <tr>
+				<td> Password: </td>
+				<td> <input type='password' id='password' />
+			</tr>
+		</table>
+		<button name='register' onclick="register();">Εγγραφή</button>
+		<div>
+			<p>Είστε εγγεγραμμένος;<a href="loginpage.html">Σύνδεση</a></p>
+		</div>		
+
+	</body>
+</html>
