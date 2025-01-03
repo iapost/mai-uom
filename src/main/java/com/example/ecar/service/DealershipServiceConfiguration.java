@@ -55,7 +55,7 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 		car8.setDealership(d4);
 		Car car9 = new Car("Audi", "A6", "Βενζίνη", 2000, 5, 35000, "Εγγύηση 6 χρόνια", 4);
 		car9.setDealership(d4);
-		Car car10 = new Car(" Citroen", "C1", "Υβριδικό Βενζίνη", 800, 3, 14000, "Δώρο 10 service αντιπροσωπείας", 6);
+		Car car10 = new Car("Citroen", "C1", "Υβριδικό Βενζίνη", 800, 3, 14000, "Δώρο 10 service αντιπροσωπείας", 6);
 		car10.setDealership(d2);
 		Car car11 = new Car("Citroen", "C2", "Πετρέλαιο", 1200, 3, 15000, "FullExtra", 5);
 		car11.setDealership(d2);

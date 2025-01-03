@@ -34,7 +34,14 @@ public class Client{
 	@JoinTable(name="appointment", 
 			   joinColumns = @JoinColumn(name="client_id"),
 			   inverseJoinColumns = @JoinColumn(name="car_id"))
-	private Set<Car> cars = new HashSet<Car>();
+	private Set<Car> testDriveCars = new HashSet<Car>();
+	
+	//sxesi N-N me ton pinaka Car. Stin ousia dimiourgia pinaka Sale
+		@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+		@JoinTable(name="sale", 
+				   joinColumns = @JoinColumn(name="client_id"),
+				   inverseJoinColumns = @JoinColumn(name="car_id"))
+		private Set<Car> boughtCars = new HashSet<Car>();
 
 
 	public Client() {

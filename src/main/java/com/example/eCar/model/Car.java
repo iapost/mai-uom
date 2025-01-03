@@ -27,8 +27,11 @@ public class Car {
 	private String info;
 	private int amount;
 	
-	@ManyToMany(mappedBy = "cars")
-	private Set<Client> clients = new HashSet<Client>();
+	@ManyToMany(mappedBy = "testDriveCars")
+	private Set<Client> testers = new HashSet<Client>();
+	
+	@ManyToMany(mappedBy = "boughtCars")
+	private Set<Client> buyers = new HashSet<Client>();
 
 	@ManyToOne
 	@JoinColumn(name = "dealership_id")
@@ -124,5 +127,14 @@ public class Car {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
+	public void addClient(Client client) {
+		buyers.add(client);
+	}
+	
+	public void addTester(Client client) {
+		testers.add(client);
+	}
+
 
 }
