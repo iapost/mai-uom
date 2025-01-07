@@ -50,7 +50,8 @@
 		<button onclick="bookTest();">Κράτηση TestDrive</button>
 
 		<script>
-
+			const token = new URLSearchParams(window.location.search).get('token');
+			
 			document.addEventListener('DOMContentLoaded', function(){
 				var car = JSON.parse(localStorage.getItem('selectedCar'));
 				if(car){
@@ -68,29 +69,12 @@
 		
 			function buyCar() {
 				var settings = {
-					"url": "/client/buyCar",
-					"method": "POST",
-					"timeout": 0,
-					"headers": {
-					"Content-Type": "application/json"
-				  },
-				  "data": JSON.stringify({
-					"id" : document.getElementById("carId").innerHTML,
-					"brand" : document.getElementById("brand").innerHTML,
-					"model" : document.getElementById("model").innerHTML,
-					"fuel" : document.getElementById("fuel").innerHTML, 
-					"engine" : document.getElementById("engine").innerHTML,
-					"seats" : document.getElementById("seats").innerHTML,
-					"info" : document.getElementById("info").innerHTML, 
-					"price" : document.getElementById("price").innerHTML,
-					"amount" : document.getElementById("amount").innerHTML
-				  }),
+					"url": "/client/buyCar?token=" + token + "&id=" + document.getElementById("carId").innerHTML,
+					"method": "GET",
+					"timeout": 0
 				};
-					
-				
 				$.ajax(settings).done(function (response) {
-					console.log("ok bought the car ");
-					window.location.href = '/ui/clientHomePage';
+					window.location.href = '/ui/clientHomePage?token=' + token;
 				});
 			};
 

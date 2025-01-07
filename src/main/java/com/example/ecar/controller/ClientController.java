@@ -24,20 +24,20 @@ public class ClientController {
 	private ClientService clientService;
 
 	@PostMapping("/search")
-	public List<Car> searchCars(@RequestBody SearchCarRequestDto dto) throws Exception {
-		System.out.println((dto.brand==null));
+	public List<Car> searchCars(@RequestParam String token, @RequestBody SearchCarRequestDto dto) {
+		clientService.getClientByToken(token);
 		return clientService.searchCars(dto.brand, dto.model, dto.fuel, dto.seats, dto.fromPrice, dto.toPrice, dto.fromEngine, dto.toEngine);
 	}
 
 	@GetMapping("/getCars")
-	public List<Car> getCars() throws Exception {
+	public List<Car> getCars(@RequestParam String token) {
+		clientService.getClientByToken(token);
 		return clientService.getCars();
 	}
 
-	// localhost:8080/client/buyCar
-	@PostMapping("/buyCar")
-	public void addCar(@RequestBody Car car) throws Exception {
-		clientService.buyCar(car);
+	@GetMapping("/buyCar")
+	public void addCar(@RequestParam String token, @RequestParam int id) {
+		clientService.buyCar(token, id);
 	}
 
 }

@@ -67,9 +67,11 @@
 	</body>
 
 	<script>
+		const token = new URLSearchParams(window.location.search).get('token');
+	
 		function showAll() {
 				var settings = {
-					"url": "/client/getCars",
+					"url": "/client/getCars?token=" + token,
 					"method": "GET",
 					"timeout": 0
 				};
@@ -80,7 +82,7 @@
 
 		function searchCar() {
 				var settings = {
-					"url": "/client/search",
+					"url": "/client/search?token=" + token,
 					"method": "POST",
 					"timeout": 0,
 					"headers": {
@@ -135,7 +137,7 @@
 					row.onclick = (function(car) {
 						return function(){
 							localStorage.setItem('selectedCar', JSON.stringify(car));
-							window.location.href = '/ui/viewCar';
+							window.location.href = '/ui/viewCar?token=' + token;
 						};
 					})(car);
 				}

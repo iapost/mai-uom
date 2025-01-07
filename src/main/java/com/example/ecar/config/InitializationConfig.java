@@ -5,21 +5,31 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.ecar.model.Car;
+import com.example.ecar.model.Client;
 import com.example.ecar.model.Dealership;
 import com.example.ecar.repository.CarRepository;
+import com.example.ecar.repository.ClientRepository;
 import com.example.ecar.repository.DealershipRepository;
 
 @Configuration
-public class DealershipServiceConfiguration implements CommandLineRunner {
+public class InitializationConfig implements CommandLineRunner {
 
 	@Autowired
 	DealershipRepository dRepo;
 
 	@Autowired
 	CarRepository cRepo;
+	
+	@Autowired
+	ClientRepository clientRepo;
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		Client c1 = new Client(123456789, "123", "Τάσος", "Χρυσοχοΐδης", "mai25067@uom.edu.gr");
+		Client c2 = new Client(987654321, "123", "Γιάννης", "Αποστολάκης", "mai25004@uom.edu.gr");
+		clientRepo.save(c1);
+		clientRepo.save(c2);
 
 		Dealership d1 = new Dealership(123456781, "123", "Toyta-Κατικαρίδης", "Κώστας Κατικαρίδης");
 		Dealership d2 = new Dealership(987654123, "123", "Citroen-Ασπρόπουλος", "Ιορδάνης Ασπρόπουλος");
@@ -54,7 +64,6 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 		car11.setDealership(d2);
 		Car car12 = new Car("Citroen", "C3", "Βενζίνη", 1400, 5, 18000, "FullExtra", 1);
 		car12.setDealership(d2);
-
 		cRepo.save(car1);
 		cRepo.save(car2);
 		cRepo.save(car3);
