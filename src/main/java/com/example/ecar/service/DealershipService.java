@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecar.exception.AuthFailureException;
+import com.example.ecar.exception.NotFoundException;
 import com.example.ecar.model.Car;
 import com.example.ecar.model.Dealership;
 import com.example.ecar.repository.CarRepository;
@@ -22,7 +24,7 @@ public class DealershipService {
 	public Dealership getDealershipByToken(String token) {
 		List<Dealership> dealerList = dealershipRepo.findByToken(token);
 		if (dealerList.size() != 1) {
-			throw new RuntimeException("Invalid token");
+			throw new AuthFailureException();
 		}
 		return dealerList.get(0);
 	}
@@ -56,7 +58,7 @@ public class DealershipService {
 				return;
 			}
 		}
-		throw new RuntimeException("No car found with given id for this dealership");
+		throw new NotFoundException();
 	}
 
 }

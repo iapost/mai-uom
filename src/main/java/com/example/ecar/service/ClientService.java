@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecar.exception.AuthFailureException;
+import com.example.ecar.exception.BadRequestException;
 import com.example.ecar.model.Car;
 import com.example.ecar.model.Client;
 import com.example.ecar.repository.CarRepository;
@@ -26,7 +28,7 @@ public class ClientService {
 	public Client getClientByToken(String token) {
 		List<Client> clientList = clientRepo.findByToken(token);
 		if (clientList.size() != 1) {
-			throw new RuntimeException("Invalid token");
+			throw new AuthFailureException();
 		}
 		return clientList.get(0);
 	}
@@ -38,7 +40,7 @@ public class ClientService {
 	public void buyCar(String token, int id) {
 		getClientByToken(token);
 		if (carRepo.buyCar(id) != 1) {
-			throw new RuntimeException("Could not complete transaction");
+			throw new BadRequestException("Could not complete transaction");
 		}
 	}
 
