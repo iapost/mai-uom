@@ -14,7 +14,7 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 
 	@Autowired
 	DealershipRepository dRepo;
-	
+
 	@Autowired
 	CarRepository cRepo;
 
@@ -29,7 +29,7 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 		dRepo.save(d2);
 		dRepo.save(d3);
 		dRepo.save(d4);
-		
+
 		Car car1 = new Car("Volkswagen", "Golf", "Πετρέλαιο", 1400, 5, 18000, "Έκδοση GTI", 3);
 		car1.setDealership(d3);
 		Car car2 = new Car("Volkswagen", "Polo", "Πετρέλαιο", 1400, 5, 16000, "Έκδοση TDI", 2);
@@ -54,7 +54,7 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 		car11.setDealership(d2);
 		Car car12 = new Car("Citroen", "C3", "Βενζίνη", 1400, 5, 18000, "FullExtra", 1);
 		car12.setDealership(d2);
-		
+
 		cRepo.save(car1);
 		cRepo.save(car2);
 		cRepo.save(car3);

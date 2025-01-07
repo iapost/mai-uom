@@ -15,7 +15,7 @@ public class DealershipService {
 
 	@Autowired
 	private CarRepository carRepo;
-	
+
 	@Autowired
 	private DealershipRepository dealershipRepo;
 
@@ -43,7 +43,7 @@ public class DealershipService {
 	public void updateCar(String token, Car car) {
 		Dealership d = getDealershipByToken(token);
 		for (Car c : d.getCars()) {
-			if(c.getId() == car.getId()) {
+			if (c.getId() == car.getId()) {
 				c.setBrand(car.getBrand());
 				c.setModel(car.getModel());
 				c.setFuel(car.getFuel());

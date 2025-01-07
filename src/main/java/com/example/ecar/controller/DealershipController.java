@@ -22,7 +22,7 @@ public class DealershipController {
 
 	@Autowired
 	private DealershipService dealershipService;
-	
+
 	@GetMapping("/getCars")
 	public List<Car> getCars(@RequestParam String token) {
 		return dealershipService.getCars(token);
@@ -30,7 +30,8 @@ public class DealershipController {
 
 	@PostMapping("/addCar")
 	public void addCar(@RequestParam String token, @RequestBody AddCarRequestDto dto) {
-		dealershipService.addCar(token, dto.brand, dto.model, dto.fuel, dto.engine, dto.seats, dto.price, dto.info, dto.amount);
+		dealershipService.addCar(token, dto.brand, dto.model, dto.fuel, dto.engine, dto.seats, dto.price, dto.info,
+				dto.amount);
 	}
 
 	@PostMapping("/updateCar")
