@@ -68,7 +68,7 @@
 		
 			function buyCar() {
 				var settings = {
-					"url": "http://localhost:8080/client/buyCar",
+					"url": "/client/buyCar",
 					"method": "POST",
 					"timeout": 0,
 					"headers": {
@@ -90,7 +90,7 @@
 				
 				$.ajax(settings).done(function (response) {
 					console.log("ok bought the car ");
-					window.location.href = 'clientHomePage.html';
+					window.location.href = '/ui/clientHomePage';
 				});
 			};
 

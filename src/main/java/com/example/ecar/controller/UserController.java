@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.ecar.dto.ClientRegisterRequestDto;
 import com.example.ecar.dto.DealershipRegisterRequestDto;
 import com.example.ecar.dto.LoginRequestDto;
+import com.example.ecar.dto.LoginResponseDto;
 import com.example.ecar.service.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -18,17 +19,17 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping(path = "/login")
-	public String login(@RequestBody LoginRequestDto loginRequestDto) {
-		return userService.login(loginRequestDto.afm, loginRequestDto.password);
+	@PostMapping("/login")
+	public LoginResponseDto login(@RequestBody LoginRequestDto dto) {
+		return userService.login(dto.afm, dto.password);
 	}
 
-	@PostMapping(path = "/clientRegister")
+	@PostMapping("/clientRegister")
 	public void clientRegister(@RequestBody ClientRegisterRequestDto dto) {
 		userService.clientRegister(dto.afm, dto.password, dto.firstName, dto.lastName, dto.email);
 	}
 
-	@PostMapping(path = "/dealershipRegister")
+	@PostMapping("/dealershipRegister")
 	public void dealershipRegister(@RequestBody DealershipRegisterRequestDto dto) {
 		userService.dealershipRegister(dto.afm, dto.password, dto.name, dto.owner);
 	}

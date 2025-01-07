@@ -1,7 +1,6 @@
 package com.example.ecar.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,40 +15,48 @@ public class DealershipService {
 
 	@Autowired
 	private CarRepository carRepo;
+	
 	@Autowired
-	private DealershipRepository dealerRepo;
+	private DealershipRepository dealershipRepo;
 
-	// OK
-	// epistefei ola ta carss tis vasis.
-	// TODO Tha prepei na epistrefei mono ta dika tou cars kai auto tha lythei me to
-	// session, exontas kratimeno to id tou dealsership
-	public List<Car> getCars() throws Exception {
-		return carRepo.findAll();
+	public Dealership getDealershipByToken(String token) {
+		List<Dealership> dealerList = dealershipRepo.findByToken(token);
+		if (dealerList.size() != 1) {
+			throw new RuntimeException("Invalid token");
+		}
+		return dealerList.get(0);
 	}
 
-	// OK
-	// prosthetei car stin vasi.
-	// TODO Kai auto tha prepei na prosthetei car me to id tou loggarismenou
-	// dealership. Tha lythei me to session
-	public void addCar(Car car) throws Exception {
-		Optional<Car> byId = carRepo.findById(car.getId());
-		if (!byId.isPresent())
-			carRepo.save(car);
+	public List<Car> getCars(String token) {
+		Dealership d = getDealershipByToken(token);
+		return d.getCars();
 	}
 
-	// OK
-	// pairnoyme ena anatheorimeno car kai epeidi sto request exoume kai to car.id,
-	// tote me to aplo save katalavainei kai kanei update
-	public Car updateCar(Car updatedCar) {
-		return carRepo.save(updatedCar);
-
+	public void addCar(String token, String brand, String model, String fuel, int engine, int seats, double price,
+			String info, int amount) {
+		Dealership d = getDealershipByToken(token);
+		Car newCar = new Car(brand, model, fuel, engine, seats, price, info, amount);
+		newCar.setDealership(d);
+		carRepo.save(newCar);
 	}
 
-	// gia tin dimiourgia object dealership apo to configuration
-	public void addDealership(Dealership dealership) throws Exception {
-		Optional<Dealership> byId = dealerRepo.findById(dealership.getAfm());
-		if (!byId.isPresent())
-			dealerRepo.save(dealership);
+	public void updateCar(String token, Car car) {
+		Dealership d = getDealershipByToken(token);
+		for (Car c : d.getCars()) {
+			if(c.getId() == car.getId()) {
+				c.setBrand(car.getBrand());
+				c.setModel(car.getModel());
+				c.setFuel(car.getFuel());
+				c.setEngine(car.getEngine());
+				c.setSeats(car.getSeats());
+				c.setPrice(car.getPrice());
+				c.setInfo(car.getInfo());
+				c.setAmount(car.getAmount());
+				carRepo.save(c);
+				return;
+			}
+		}
+		throw new RuntimeException("No car found with given id for this dealership");
 	}
 
 }

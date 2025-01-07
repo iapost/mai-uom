@@ -7,27 +7,21 @@
 		<script>
 			function register() {				
 				var settings = {
-					"url": "http://localhost:8080/dealershipRegister",
+					"url": "/dealershipRegister",
 					"method": "POST",
 					"timeout": 0,
 					"headers": {
 					"Content-Type": "application/json"},
 					"data": JSON.stringify({
-						"credentials" : {
-							"username": document.getElementById("username").value,
-							"password": document.getElementById("password").value,
-							"role": "2"
-					},
-					"dealership" : {
-						"name": document.getElementById("name").value,
-						"owner": document.getElementById("owner").value,
-						"afm": document.getElementById("afm").value
-					}
-				  }),
+							"name": document.getElementById("name").value,
+							"owner": document.getElementById("owner").value,
+							"afm": document.getElementById("afm").value,
+							"password": document.getElementById("password").value
+					  }),
 				};
 				$.ajax(settings).done(function (response) {
 					console.log("registration success");
-					window.location.href = "login.html";
+					window.location.href = "/ui/login";
 				});
 			}
 		
@@ -46,17 +40,13 @@
 				<td> <input type='text' id='owner' />
 			</tr>
             <tr>
-				<td> Username: </td>
-				<td> <input type='text' id='username' />
-			</tr>
-            <tr>
 				<td> Password: </td>
 				<td> <input type='password' id='password' />
 			</tr>
 		</table>
 		<button name='register' onclick="register();">Εγγραφή</button>
 		<div>
-			<p>Είστε εγγεγραμμένος;<a href="loginpage.html">Σύνδεση</a></p>
+			<p>Είστε εγγεγραμμένος;<a href="/ui/login">Σύνδεση</a></p>
 		</div>		
 
 	</body>

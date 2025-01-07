@@ -5,9 +5,11 @@
 	</head>
 	<body>
 		<script>
+			const token = new URLSearchParams(window.location.search).get('token');
+		
 			function addCar() {				
 				var settings = {
-					"url": "http://localhost:8080/dealership/addCar",
+					"url": "/dealership/addCar?token=" + token,
 					"method": "POST",
 					"timeout": 0,
 					"headers": {
@@ -25,7 +27,7 @@
 				};
 				$.ajax(settings).done(function (response) {
                     alert("Car Added")
-					window.location.href = "dealershipHomePage.html";
+					window.location.href = "/ui/dealershipHomePage?token=" + token;
 				});
 			}
 		
@@ -41,7 +43,7 @@
 			</tr>
             <tr>
 				<td> Κινητήρας: </td>
-				<td> <input type='text' id='engine' />
+				<td> <input type='number' id='engine' />
 			</tr>
             <tr>
 				<td> Καύσιμο: </td>

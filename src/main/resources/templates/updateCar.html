@@ -49,6 +49,7 @@
 		<button onclick="updateCar();">Αποθήκευση</button>
 
 		<script>
+			const token = new URLSearchParams(window.location.search).get('token');
 
 			document.addEventListener('DOMContentLoaded', function(){
 				var car = JSON.parse(localStorage.getItem('selectedCar'));
@@ -67,8 +68,8 @@
 		
 			function updateCar() {
 				var settings = {
-					"url": "http://localhost:8080/dealership/updateCar",
-					"method": "PUT",
+					"url": "/dealership/updateCar?token=" + token,
+					"method": "POST",
 					"timeout": 0,
 					"headers": {
 					"Content-Type": "application/json"
@@ -89,7 +90,7 @@
 				
 				$.ajax(settings).done(function (response) {
 					console.log("ok edited the car ");
-					window.location.href = 'dealershipHomePage.html';
+					window.location.href = '/ui/dealershipHomePage?token=' + token;
 				});
 			};
 

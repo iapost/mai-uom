@@ -1,17 +1,9 @@
 package com.example.ecar.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Client extends AuthenticatedUser {
@@ -22,20 +14,8 @@ public class Client extends AuthenticatedUser {
 	
 	private String email;
 	
-	//sxesi N-N me ton pinaka Car. Stin ousia dimiourgia pinaka Appointment
-	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name="appointment", 
-			   joinColumns = @JoinColumn(name="client_id"),
-			   inverseJoinColumns = @JoinColumn(name="car_id"))
-	private Set<Car> testDriveCars = new HashSet<Car>();
-	
-	//sxesi N-N me ton pinaka Car. Stin ousia dimiourgia pinaka Sale
-	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name="sale", 
-			   joinColumns = @JoinColumn(name="client_id"),
-			   inverseJoinColumns = @JoinColumn(name="car_id"))
-	private Set<Car> boughtCars = new HashSet<Car>();
-
+	@OneToMany(mappedBy="tester")
+	private Set<Reservation> reservations;
 
 	public Client() {
 	}
@@ -71,20 +51,14 @@ public class Client extends AuthenticatedUser {
 		this.lastName = lastName;
 	}
 
-	public Set<Car> getTestDriveCars() {
-		return testDriveCars;
+	public Set<Reservation> getReservations() {
+		return reservations;
 	}
 
-	public void setTestDriveCars(Set<Car> testDriveCars) {
-		this.testDriveCars = testDriveCars;
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
-	public Set<Car> getBoughtCars() {
-		return boughtCars;
-	}
 
-	public void setBoughtCars(Set<Car> boughtCars) {
-		this.boughtCars = boughtCars;
-	}
 
 }

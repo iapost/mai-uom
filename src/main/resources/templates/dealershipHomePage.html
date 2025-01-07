@@ -12,7 +12,7 @@
 	<body onload="showAll();">
 		Dealership Home page
 
-		<button name='addCar' onclick="window.location.href='addCar.html';">Προσθήκη Αυτοκινήτου</button>
+		<button name='addCar' onclick="window.location.href='/ui/addCar?token=' + token;">Προσθήκη Αυτοκινήτου</button>
 				<br><br>
 		
 		<table border='1' id='resultsTable'>
@@ -30,10 +30,11 @@
 
 		
 		<script>
+			const token = new URLSearchParams(window.location.search).get('token');
 		
 			function showAll() {
 				var settings = {
-					"url": "http://localhost:8080/dealership/getCars",
+					"url": "/dealership/getCars?token=" + token,
 					"method": "GET",
 					"timeout": 0,
 					"processData": false,
@@ -78,7 +79,7 @@
 					row.onclick = (function(car) {
 						return function(){
 							localStorage.setItem('selectedCar', JSON.stringify(car));
-							window.location.href = 'updateCar.html';
+							window.location.href = '/ui/updateCar?token=' + token;
 						};
 					})(car);
 				}

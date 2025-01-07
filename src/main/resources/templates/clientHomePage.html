@@ -51,10 +51,9 @@
 	</body>
 
 	<script>
-
 	function showAll() {
 				var settings = {
-					"url": "http://localhost:8080/client/getCars",
+					"url": "/client/getCars",
 					"method": "GET",
 					"timeout": 0,
 					"processData": false,
@@ -68,7 +67,7 @@
 
 	function searchCar() {
 				var settings = {
-					"url": "http://localhost:8080/client/search?" + 
+					"url": "/client/search?" + 
 					"brand=" + document.getElementById("brand").value +
 					"&model=" + document.getElementById("model").value +
 					"&price=" + document.getElementById("price").value +
@@ -118,7 +117,7 @@
 					row.onclick = (function(car) {
 						return function(){
 							localStorage.setItem('selectedCar', JSON.stringify(car));
-							window.location.href = 'viewCar.html';
+							window.location.href = '/ui/viewCar';
 						};
 					})(car);
 				}

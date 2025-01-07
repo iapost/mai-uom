@@ -7,29 +7,27 @@
 		<script>
 			function login() {				
 				var settings = {
-					"url": "http://localhost:8080/login",
+					"url": "/login",
 					"method": "POST",
 					"timeout": 0,
 					"headers": {
-					"Content-Type": "application/json"
-				  },
+						"Content-Type": "application/json"
+					  },
 					"data": JSON.stringify({
-					"username": document.getElementById("username").value,
+					"afm": document.getElementById("afm").value,
 					"password": document.getElementById("password").value
 				  }),
 				};
 				$.ajax(settings).done(function (response) {
-					if(response.role === 0){
-						alert("Δώσατε λάθος διαπιστευτήρια. Προσπαθήστε ξανά");
-					}
-					else if(response.role === 1){
-						window.location.href = "clientHomePage.html"
+					if(response.role === 1){
+						window.location.href = "/ui/clientHomePage?token=" + response.token
 					}
 					else if(response.role === 2){
-						window.location.href = "dealershipHomePage.html"
+						window.location.href = "/ui/dealershipHomePage?token=" + response.token
 					}
-
-					console.log("got in home page");
+					else{
+						alert("Δώσατε λάθος διαπιστευτήρια. Προσπαθήστε ξανά");
+					} 
 				});
 			}
 			
@@ -37,8 +35,8 @@
 		</script>	
 		<table>
 			<tr>
-				<td> Username: </td>
-				<td> <input type='text' id='username' />
+				<td> AFM: </td>
+				<td> <input type='text' id='afm' />
 			</tr>
 			<tr>
 				<td> Password: </td>

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Car {
@@ -27,15 +28,10 @@ public class Car {
 	private String info;
 	private int amount;
 	
-	@ManyToMany(mappedBy = "testDriveCars")
-	private Set<Client> testers = new HashSet<Client>();
+	@OneToMany(mappedBy="car")
+	private Set<Reservation> reservations;
 	
-	@ManyToMany(mappedBy = "boughtCars")
-	private Set<Client> buyers = new HashSet<Client>();
-	
-	//sxesi N-1 me ton pinaka dealership
 	@ManyToOne
-	@JoinColumn(name = "dealership_id")
 	private Dealership dealership;
 
 	public Car() {
@@ -128,14 +124,5 @@ public class Car {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
-	public void addClient(Client client) {
-		buyers.add(client);
-	}
-	
-	public void addTester(Client client) {
-		testers.add(client);
-	}
-
 
 }

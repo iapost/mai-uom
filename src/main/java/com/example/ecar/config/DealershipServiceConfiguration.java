@@ -6,13 +6,17 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.ecar.model.Car;
 import com.example.ecar.model.Dealership;
-import com.example.ecar.service.DealershipService;
+import com.example.ecar.repository.CarRepository;
+import com.example.ecar.repository.DealershipRepository;
 
 @Configuration
 public class DealershipServiceConfiguration implements CommandLineRunner {
 
 	@Autowired
-	DealershipService dService;
+	DealershipRepository dRepo;
+	
+	@Autowired
+	CarRepository cRepo;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -21,12 +25,11 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 		Dealership d2 = new Dealership(987654123, "123", "Citroen-Ασπρόπουλος", "Ιορδάνης Ασπρόπουλος");
 		Dealership d3 = new Dealership(456789123, "123", "Volksvagen-Πετρακάκης", "Γιάννης Πετρακάκης");
 		Dealership d4 = new Dealership(789123456, "123", "Audi-Παπαδόπουλος", "Πέτρος Παπαδόπουλος");
-
-		dService.addDealership(d1);
-		dService.addDealership(d2);
-		dService.addDealership(d3);
-		dService.addDealership(d4);
-
+		dRepo.save(d1);
+		dRepo.save(d2);
+		dRepo.save(d3);
+		dRepo.save(d4);
+		
 		Car car1 = new Car("Volkswagen", "Golf", "Πετρέλαιο", 1400, 5, 18000, "Έκδοση GTI", 3);
 		car1.setDealership(d3);
 		Car car2 = new Car("Volkswagen", "Polo", "Πετρέλαιο", 1400, 5, 16000, "Έκδοση TDI", 2);
@@ -51,32 +54,19 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 		car11.setDealership(d2);
 		Car car12 = new Car("Citroen", "C3", "Βενζίνη", 1400, 5, 18000, "FullExtra", 1);
 		car12.setDealership(d2);
-
-		d1.addCar(car4);
-		d1.addCar(car5);
-		d1.addCar(car6);
-		d3.addCar(car1);
-		d3.addCar(car2);
-		d3.addCar(car3);
-		d4.addCar(car7);
-		d4.addCar(car8);
-		d4.addCar(car9);
-		d3.addCar(car10);
-		d3.addCar(car11);
-		d3.addCar(car12);
-
-		dService.addCar(car1);
-		dService.addCar(car2);
-		dService.addCar(car3);
-		dService.addCar(car4);
-		dService.addCar(car5);
-		dService.addCar(car6);
-		dService.addCar(car7);
-		dService.addCar(car8);
-		dService.addCar(car9);
-		dService.addCar(car10);
-		dService.addCar(car11);
-		dService.addCar(car12);
+		
+		cRepo.save(car1);
+		cRepo.save(car2);
+		cRepo.save(car3);
+		cRepo.save(car4);
+		cRepo.save(car5);
+		cRepo.save(car6);
+		cRepo.save(car7);
+		cRepo.save(car8);
+		cRepo.save(car9);
+		cRepo.save(car10);
+		cRepo.save(car11);
+		cRepo.save(car12);
 
 	}
 

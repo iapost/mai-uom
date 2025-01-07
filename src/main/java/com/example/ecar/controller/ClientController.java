@@ -22,7 +22,7 @@ public class ClientController {
 	@Autowired
 	private ClientService cService;
 
-	@GetMapping(path = "/search")
+	@GetMapping("/search")
 	public List<Car> searchCars(@RequestParam(value = "brand") String brand,
 			@RequestParam(value = "model") String model, @RequestParam(value = "fuel") String fuel,
 			@RequestParam(value = "price") String price) throws Exception {
@@ -32,13 +32,13 @@ public class ClientController {
 	}
 
 	// localhost:8080/client/getCars
-	@GetMapping(path = "/getCars")
+	@GetMapping("/getCars")
 	public List<Car> getCars() throws Exception {
 		return cService.getCars();
 	}
 
 	// localhost:8080/client/buyCar
-	@PostMapping(path = "/buyCar")
+	@PostMapping("/buyCar")
 	public void addCar(@RequestBody Car car) throws Exception {
 		cService.buyCar(car);
 	}

@@ -7,29 +7,23 @@
 		<script>
 			function register(){				
 				var settings = {
-					"url": "http://localhost:8080/clientRegister",
+					"url": "/clientRegister",
 					"method": "POST",
 					"timeout": 0,
 					"headers": {
 					"Content-Type": "application/json"},
 					"data": JSON.stringify({
-						"credentials" : {
-							"username": document.getElementById("username").value,
-							"password": document.getElementById("password").value,
-							"role": "1"
-					},
-					"client" : {
-						"fname": document.getElementById("fname").value,
-						"sname": document.getElementById("sname").value,
+						"firstName": document.getElementById("fname").value,
+						"lastName": document.getElementById("lname").value,
 						"afm": document.getElementById("afm").value,
+						"password": document.getElementById("password").value,
 						"email": document.getElementById("email").value,
-					}
 				  }),
 				};
 				
 				$.ajax(settings).done(function (response) {
 					console.log("registration success");
-					window.location.href = "login.html";
+					window.location.href = "/ui/login";
 				});
 			}
 		
@@ -41,7 +35,7 @@
 			</tr>
 			<tr>
 				<td> Επώνυμο: </td>
-				<td> <input type='text' id='sname' />
+				<td> <input type='text' id='lname' />
 			</tr>
             <tr>
 				<td> ΑΦΜ: </td>
@@ -52,17 +46,13 @@
 				<td> <input type='text' id='email' />
 			</tr>
             <tr>
-				<td> Username: </td>
-				<td> <input type='text' id='username' />
-			</tr>
-            <tr>
 				<td> Password: </td>
 				<td> <input type='password' id='password' />
 			</tr>
 		</table>
 		<button name='register' onclick="register();">Εγγραφή</button>
 		<div>
-			<p>Είστε εγγεγραμμένος;<a href="loginpage.html">Σύνδεση</a></p>
+			<p>Είστε εγγεγραμμένος;<a href="/ui/login">Σύνδεση</a></p>
 		</div>		
 
 	</body>

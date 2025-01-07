@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecar.dto.LoginResponseDto;
 import com.example.ecar.model.Client;
 import com.example.ecar.model.Dealership;
 import com.example.ecar.repository.ClientRepository;
@@ -21,29 +22,32 @@ public class UserService {
 	@Autowired
 	private DealershipRepository dealershipRepo;
 
-	public String login(int afm, String password) {
-		String token = UUID.randomUUID().toString();
+	public LoginResponseDto login(int afm, String password) {
+		LoginResponseDto result = new LoginResponseDto();
+		result.token = UUID.randomUUID().toString();
 		Optional<Client> optClient = clientRepo.findById(afm);
 		if (optClient.isPresent()) {
 			Client c = optClient.get();
 			if (!c.getPassword().equals(password)) {
 				throw new RuntimeException("Invalid Credentials");
 			}
-			c.setToken(token);
+			c.setToken(result.token);
 			clientRepo.save(c);
+			result.role = 1;
 		} else {
 			Optional<Dealership> optDealership = dealershipRepo.findById(afm);
-			if (optClient.isEmpty()) {
+			if (optDealership.isEmpty()) {
 				throw new RuntimeException("Invalid Credentials");
 			}
 			Dealership d = optDealership.get();
 			if (!d.getPassword().equals(password)) {
 				throw new RuntimeException("Invalid Credentials");
 			}
-			d.setToken(token);
+			d.setToken(result.token);
 			dealershipRepo.save(d);
+			result.role = 2;
 		}
-		return token;
+		return result;
 	}
 
 	public void clientRegister(int afm, String password, String firstName, String lastName, String email) {
@@ -66,14 +70,6 @@ public class UserService {
 			throw new RuntimeException("Invalid token");
 		}
 		return clientList.get(0);
-	}
-	
-	public Dealership getDealershipByToken(String token) {
-		List<Dealership> dealerList = dealershipRepo.findByToken(token);
-		if (dealerList.size() != 1) {
-			throw new RuntimeException("Invalid token");
-		}
-		return dealerList.get(0);
 	}
 
 }

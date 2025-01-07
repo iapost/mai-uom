@@ -15,8 +15,7 @@ public class Dealership extends AuthenticatedUser {
 	
 	private String owner;
 
-	//sxesi 1-N me ton pinaka cars
-	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "dealership", cascade = CascadeType.ALL)
 	private List<Car> cars = new ArrayList<Car>();
 
 	public Dealership() {
@@ -48,5 +47,15 @@ public class Dealership extends AuthenticatedUser {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
+
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}
+	
+	
 
 }
