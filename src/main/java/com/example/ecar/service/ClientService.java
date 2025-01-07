@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.ecar.model.Car;
 import com.example.ecar.model.Client;
-import com.example.ecar.repos.CarRepository;
-import com.example.ecar.repos.ClientRepository;
-import com.example.ecar.repos.DealershipRepository;
+import com.example.ecar.repository.CarRepository;
+import com.example.ecar.repository.ClientRepository;
+import com.example.ecar.repository.DealershipRepository;
 
 @Service
 public class ClientService {

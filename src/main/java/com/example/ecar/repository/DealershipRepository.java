@@ -1,4 +1,4 @@
-package com.example.ecar.repos;
+package com.example.ecar.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

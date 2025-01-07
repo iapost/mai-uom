@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.ecar.model.Car;
 import com.example.ecar.model.Dealership;
-import com.example.ecar.repos.CarRepository;
-import com.example.ecar.repos.DealershipRepository;
+import com.example.ecar.repository.CarRepository;
+import com.example.ecar.repository.DealershipRepository;
 
 @Service
 public class DealershipService {
