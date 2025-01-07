@@ -1,4 +1,4 @@
-package com.example.ecar.service;
+package com.example.ecar.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,6 +8,7 @@ import com.example.ecar.model.Car;
 import com.example.ecar.model.Client;
 import com.example.ecar.model.Credentials;
 import com.example.ecar.model.Dealership;
+import com.example.ecar.service.ClientService;
 
 @Configuration
 public class ClientServiceConfiguration implements CommandLineRunner {
