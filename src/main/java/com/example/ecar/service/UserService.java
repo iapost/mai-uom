@@ -64,12 +64,4 @@ public class UserService {
 		dealershipRepo.save(new Dealership(afm, password, name, owner));
 	}
 
-	public Client getClientByToken(String token) {
-		List<Client> clientList = clientRepo.findByToken(token);
-		if (clientList.size() != 1) {
-			throw new RuntimeException("Invalid token");
-		}
-		return clientList.get(0);
-	}
-
 }

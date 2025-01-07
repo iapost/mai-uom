@@ -23,12 +23,28 @@
 				<td> <input type='text' id='model' />
 			</tr>
 			<tr>
-				<td> Τιμή: </td>
-				<td> <input type='text' id='price' />
+				<td> Ελάχιστη Τιμή: </td>
+				<td> <input type='number' id='fromPrice' />
+			</tr>
+			<tr>
+				<td> Μέγιστη Τιμή: </td>
+				<td> <input type='number' id='toPrice' />
+			</tr>
+			<tr>
+				<td> Ελάχιστος κινητήρα: </td>
+				<td> <input type='number' id='fromEngine' />
+			</tr>
+			<tr>
+				<td> Μέγιστος κινητήρας: </td>
+				<td> <input type='number' id='toEngine' />
 			</tr>
 			<tr>
 				<td> Καύσιμο: </td>
 				<td> <input type='text' id='fuel' />
+			</tr>
+			<tr>
+				<td> Θέσεις: </td>
+				<td> <input type='number' id='seats' />
 			</tr>
 		</table>
 
@@ -51,42 +67,44 @@
 	</body>
 
 	<script>
-	function showAll() {
+		function showAll() {
 				var settings = {
 					"url": "/client/getCars",
 					"method": "GET",
-					"timeout": 0,
-					"processData": false,
-					"mimeType": "multipart/form-data",
-					"contentType": false
+					"timeout": 0
 				};
 				$.ajax(settings).done(function (response) {
 					updateTable(response);
 				});
 			}
 
-	function searchCar() {
+		function searchCar() {
 				var settings = {
-					"url": "/client/search?" + 
-					"brand=" + document.getElementById("brand").value +
-					"&model=" + document.getElementById("model").value +
-					"&price=" + document.getElementById("price").value +
-					"&fuel=" + document.getElementById("fuel").value,		
-					"method": "GET",
+					"url": "/client/search",
+					"method": "POST",
 					"timeout": 0,
-					"processData": false,
-					"mimeType": "multipart/form-data",
-					"contentType": false
+					"headers": {
+						"Content-Type": "application/json"},
+					"data": JSON.stringify({
+						"brand": document.getElementById("brand").value,
+						"model": document.getElementById("model").value,
+						"fuel": document.getElementById("fuel").value,
+						"seats": document.getElementById("seats").value,
+						"fromPrice": document.getElementById("fromPrice").value,
+						"toPrice": document.getElementById("toPrice").value,
+						"fromEngine": document.getElementById("fromEngine").value,
+						"toEngine": document.getElementById("toEngine").value
+				  }, (key, value) => {
+					  if (value !== '') return value
+				  }),
 				};
 				$.ajax(settings).done(function (response) {
 					updateTable(response);
 				});
 			}
 
-			function updateTable(json) {
-				result = jQuery.parseJSON(json);
+			function updateTable(result) {
 				var table = document.getElementById("resultsTable");
-				//table.style.display = "table"; 
 				
 				var rowCount = table.rows.length;
 				for (var i = rowCount - 1; i > 0; i--) {

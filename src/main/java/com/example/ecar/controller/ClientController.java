@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecar.dto.SearchCarRequestDto;
 import com.example.ecar.model.Car;
 import com.example.ecar.service.ClientService;
 
@@ -20,27 +21,23 @@ import com.example.ecar.service.ClientService;
 public class ClientController {
 
 	@Autowired
-	private ClientService cService;
+	private ClientService clientService;
 
-	@GetMapping("/search")
-	public List<Car> searchCars(@RequestParam(value = "brand") String brand,
-			@RequestParam(value = "model") String model, @RequestParam(value = "fuel") String fuel,
-			@RequestParam(value = "price") String price) throws Exception {
-
-		return cService.searchCars(brand, model, fuel, price);
-
+	@PostMapping("/search")
+	public List<Car> searchCars(@RequestBody SearchCarRequestDto dto) throws Exception {
+		System.out.println((dto.brand==null));
+		return clientService.searchCars(dto.brand, dto.model, dto.fuel, dto.seats, dto.fromPrice, dto.toPrice, dto.fromEngine, dto.toEngine);
 	}
 
-	// localhost:8080/client/getCars
 	@GetMapping("/getCars")
 	public List<Car> getCars() throws Exception {
-		return cService.getCars();
+		return clientService.getCars();
 	}
 
 	// localhost:8080/client/buyCar
 	@PostMapping("/buyCar")
 	public void addCar(@RequestBody Car car) throws Exception {
-		cService.buyCar(car);
+		clientService.buyCar(car);
 	}
 
 }

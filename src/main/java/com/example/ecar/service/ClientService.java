@@ -28,6 +28,18 @@ public class ClientService {
 	public List<Car> getCars() throws Exception {
 		return carRepo.findAll();
 	}
+	
+	public Client getClientByToken(String token) {
+		List<Client> clientList = clientRepo.findByToken(token);
+		if (clientList.size() != 1) {
+			throw new RuntimeException("Invalid token");
+		}
+		return clientList.get(0);
+	}
+	
+	public List<Car> searchCars(String brand, String model, String fuel, Integer seats, Double fromPrice, Double toPrice, Integer fromEngine, Integer toEngine) {
+		return carRepo.search(brand, model, fuel, seats, fromPrice, toPrice, fromEngine, toEngine);
+	}
 
 	// edo skeftika oti kalo tha itan na yparxei pinakas boughtCars pou na ton
 	// ftiaxnoume emeis ws entity opos kai ta ypoloipa, gia na to xeiristoume
@@ -37,33 +49,6 @@ public class ClientService {
 		// Optional<Car> byId = carRepo.findById(car.getId());
 		Car boughtCar = carRepo.findById(car.getId()).orElseThrow(() -> new RuntimeException("Car not found"));
 		boughtCar.setAmount(boughtCar.getAmount() - 1);
-
-	}
-
-	// to ekana na douleuei mono me to brand ws monadiko search filter. gia na
-	// dolepsei prepei sto front end na symplirothoun ola ta fields, asxeta pou den
-	// lamvanontai ypopsin
-	// TODO na leitourgoun tautoxrona ola ta epilegmena filters
-	// na do na min lamvanontai ypopsin oi parametroi otan erxontai kenes apo ton
-	// client!!!
-	public List<Car> searchCars(String brand, String model, String fuel, String priceStr) {
-
-		double price = Double.parseDouble(priceStr);
-
-		System.out.println("Here it is:[" + brand + "]");
-		System.out.println("Here it is:[" + model + "]");
-		System.out.println("Here it is:[" + fuel + "]");
-		System.out.println("Here it is:[" + priceStr + "]");
-		List<Car> allCars = carRepo.findAll();
-		List<Car> searchResultCars = new ArrayList<Car>();
-
-		for (Car c : allCars) {
-			if (c.getBrand().equals(brand)) {
-				searchResultCars.add(c);
-			}
-		}
-
-		return searchResultCars;
 
 	}
 
