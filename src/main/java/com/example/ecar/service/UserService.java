@@ -1,24 +1,19 @@
 package com.example.ecar.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecar.model.Client;
-import com.example.ecar.model.Credentials;
 import com.example.ecar.model.Dealership;
 import com.example.ecar.repository.ClientRepository;
-import com.example.ecar.repository.CredentialsRepository;
 import com.example.ecar.repository.DealershipRepository;
 
 @Service
 public class UserService {
-
-	@Autowired
-	private CredentialsRepository credsRepo;
 
 	@Autowired
 	private ClientRepository clientRepo;
@@ -26,116 +21,59 @@ public class UserService {
 	@Autowired
 	private DealershipRepository dealershipRepo;
 
-	// OK
-	// sygkrinoume ta creds poy irthan me tin klisi tis mehtodou me ola ta creds pou
-	// yparxoun stin vasi. Se periptosi pou vrethei omoiotita epistrefetai olo to
-	// antikeimeno gia na eksetasei to front end ton rolo
-	// kai analoga na kanei redirect.
-	// TODO handle se periptosi lathous creds
-	public Credentials login(Credentials attemtedCreds) throws Exception {
-
-		List<Credentials> allCreds = credsRepo.findAll();
-		Credentials verifiedCreds = new Credentials("no", "no", 0);
-		for (Credentials c : allCreds) {
-			if (c.getUsername().equals(attemtedCreds.getUsername())
-					&& c.getPassword().equals(attemtedCreds.getPassword())) {
-				verifiedCreds = c;
-				break;
+	public String login(int afm, String password) {
+		String token = UUID.randomUUID().toString();
+		Optional<Client> optClient = clientRepo.findById(afm);
+		if (optClient.isPresent()) {
+			Client c = optClient.get();
+			if (!c.getPassword().equals(password)) {
+				throw new RuntimeException("Invalid Credentials");
 			}
+			c.setToken(token);
+			clientRepo.save(c);
+		} else {
+			Optional<Dealership> optDealership = dealershipRepo.findById(afm);
+			if (optClient.isEmpty()) {
+				throw new RuntimeException("Invalid Credentials");
+			}
+			Dealership d = optDealership.get();
+			if (!d.getPassword().equals(password)) {
+				throw new RuntimeException("Invalid Credentials");
+			}
+			d.setToken(token);
+			dealershipRepo.save(d);
 		}
-
-		return verifiedCreds;
+		return token;
 	}
 
-//	public Credentials login(Credentials attemtedCreds) throws Exception {
-//
-//		List<Credentials> allCreds = credsRepo.findAll();
-//		Credentials verifiedCreds = null;
-//		for (Credentials c : allCreds) {
-//			if (c.getUsername().equals(attemtedCreds.getUsername())
-//					&& c.getPassword().equals(attemtedCreds.getPassword())) {
-//				
-//				verifiedCreds = c;
-//				break;
-//			}
-//		}
-//
-//		return verifiedCreds;
-//	}
-
-	// dokimi with session, to check he userid
-	public int getUserId(int credsId) {
-
-		List<Client> allClients = clientRepo.findAll();
-		List<Dealership> allDealership = dealershipRepo.findAll();
-		int userId = 0;
-		for (Client c : allClients) {
-			if (credsId == c.getCredentialsId()) {
-				userId = c.getId();
-				break;
-			}
+	public void clientRegister(int afm, String password, String firstName, String lastName, String email) {
+		if (clientRepo.existsById(afm) || dealershipRepo.existsById(afm)) {
+			throw new RuntimeException("Account with this afm already exists");
 		}
-
-		for (Dealership d : allDealership) {
-			if (credsId == d.getCredentialsId()) {
-				userId = d.getId();
-				break;
-			}
-		}
-
-		return userId;
+		clientRepo.save(new Client(afm, password, firstName, lastName, email));
 	}
 
-	// OK
-	public void clientRegister(Map<String, Object> requestBody) {
-
-		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");
-		Credentials creds = new Credentials();
-		creds.setUsername((String) credentialMap.get("username"));
-		creds.setPassword((String) credentialMap.get("password"));
-		creds.setRole(Integer.parseInt(credentialMap.get("role").toString()));
-
-		Optional<Credentials> byId = credsRepo.findById(creds.getId());
-		if (!byId.isPresent())
-			credsRepo.save(creds);
-
-		Map<String, Object> clientMap = (Map<String, Object>) requestBody.get("client");
-		Client client = new Client();
-		client.setAfm(Integer.parseInt(clientMap.get("afm").toString()));
-		client.setFname((String) clientMap.get("fname"));
-		client.setSname((String) clientMap.get("sname"));
-		client.setEmail((String) clientMap.get("email"));
-		client.setCreds(creds);
-
-		Optional<Client> byId2 = clientRepo.findById(client.getId());
-		if (!byId2.isPresent())
-			clientRepo.save(client);
-
+	public void dealershipRegister(int afm, String password, String name, String owner) {
+		if (clientRepo.existsById(afm) || dealershipRepo.existsById(afm)) {
+			throw new RuntimeException("Account with this afm already exists");
+		}
+		dealershipRepo.save(new Dealership(afm, password, name, owner));
 	}
 
-	// OK
-	public void dealershipRegister(Map<String, Object> requestBody) {
-
-		Map<String, Object> credentialMap = (Map<String, Object>) requestBody.get("credentials");
-		Credentials creds = new Credentials();
-		creds.setUsername((String) credentialMap.get("username"));
-		creds.setPassword((String) credentialMap.get("password"));
-		creds.setRole(Integer.parseInt(credentialMap.get("role").toString()));
-
-		Optional<Credentials> byId = credsRepo.findById(creds.getId());
-		if (!byId.isPresent())
-			credsRepo.save(creds);
-
-		Map<String, Object> dealershipMap = (Map<String, Object>) requestBody.get("dealership");
-		Dealership dealership = new Dealership();
-		dealership.setAfm(Integer.parseInt(dealershipMap.get("afm").toString()));
-		dealership.setName((String) dealershipMap.get("name"));
-		dealership.setOwner((String) dealershipMap.get("owner"));
-		dealership.setCredentials(creds);
-
-		Optional<Dealership> byId2 = dealershipRepo.findById(dealership.getId());
-		if (!byId2.isPresent())
-			dealershipRepo.save(dealership);
+	public Client getClientByToken(String token) {
+		List<Client> clientList = clientRepo.findByToken(token);
+		if (clientList.size() != 1) {
+			throw new RuntimeException("Invalid token");
+		}
+		return clientList.get(0);
+	}
+	
+	public Dealership getDealershipByToken(String token) {
+		List<Dealership> dealerList = dealershipRepo.findByToken(token);
+		if (dealerList.size() != 1) {
+			throw new RuntimeException("Invalid token");
+		}
+		return dealerList.get(0);
 	}
 
 }

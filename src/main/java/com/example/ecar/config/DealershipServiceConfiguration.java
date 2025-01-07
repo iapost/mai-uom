@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.ecar.model.Car;
-import com.example.ecar.model.Credentials;
 import com.example.ecar.model.Dealership;
 import com.example.ecar.service.DealershipService;
 
@@ -18,20 +17,10 @@ public class DealershipServiceConfiguration implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Dealership d1 = new Dealership(123456781, "Toyta-Κατικαρίδης", "Κώστας Κατικαρίδης");
-		Dealership d2 = new Dealership(987654123, "Citroen-Ασπρόπουλος", "Ιορδάνης Ασπρόπουλος");
-		Dealership d3 = new Dealership(456789123, "Volksvagen-Πετρακάκης", "Γιάννης Πετρακάκης");
-		Dealership d4 = new Dealership(789123456, "Audi-Παπαδόπουλος", "Πέτρος Παπαδόπουλος");
-
-		Credentials creds3 = new Credentials("toyota", "123", 2);
-		Credentials creds4 = new Credentials("citro", "123", 2);
-		Credentials creds5 = new Credentials("vw", "123", 2);
-		Credentials creds6 = new Credentials("audi", "123", 2);
-
-		d1.setCredentials(creds3);
-		d2.setCredentials(creds4);
-		d3.setCredentials(creds5);
-		d4.setCredentials(creds6);
+		Dealership d1 = new Dealership(123456781, "123", "Toyta-Κατικαρίδης", "Κώστας Κατικαρίδης");
+		Dealership d2 = new Dealership(987654123, "123", "Citroen-Ασπρόπουλος", "Ιορδάνης Ασπρόπουλος");
+		Dealership d3 = new Dealership(456789123, "123", "Volksvagen-Πετρακάκης", "Γιάννης Πετρακάκης");
+		Dealership d4 = new Dealership(789123456, "123", "Audi-Παπαδόπουλος", "Πέτρος Παπαδόπουλος");
 
 		dService.addDealership(d1);
 		dService.addDealership(d2);

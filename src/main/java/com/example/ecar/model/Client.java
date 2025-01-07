@@ -14,20 +14,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Client{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//gia auto incement id
-	private int id;
-	private int afm;
-	private String fname;
-	private String sname;
-	private String email;
+public class Client extends AuthenticatedUser {
 	
-	//sxesi 1-1 me ton pinaka credentials
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="credentials_id", referencedColumnName = "id")
-	private Credentials credentials;
+	private String firstName;
+	
+	private String lastName;
+	
+	private String email;
 	
 	//sxesi N-N me ton pinaka Car. Stin ousia dimiourgia pinaka Appointment
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
@@ -37,58 +30,21 @@ public class Client{
 	private Set<Car> testDriveCars = new HashSet<Car>();
 	
 	//sxesi N-N me ton pinaka Car. Stin ousia dimiourgia pinaka Sale
-		@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-		@JoinTable(name="sale", 
-				   joinColumns = @JoinColumn(name="client_id"),
-				   inverseJoinColumns = @JoinColumn(name="car_id"))
-		private Set<Car> boughtCars = new HashSet<Car>();
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name="sale", 
+			   joinColumns = @JoinColumn(name="client_id"),
+			   inverseJoinColumns = @JoinColumn(name="car_id"))
+	private Set<Car> boughtCars = new HashSet<Car>();
 
 
 	public Client() {
-
 	}
 
-	public Client(int afm, String fname, String sname, String email) {
-		this.setAfm(afm);
-		this.setFname(fname);
-		this.setSname(sname);
+	public Client(int afm, String password, String firstName, String lastName, String email) {
+		super(afm, password);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
 		this.setEmail(email);
-	}
-	
-	public void setCreds(Credentials creds) {
-		this.credentials = creds;
-	}
-
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public int getAfm() {
-		return afm;
-	}
-
-	public void setAfm(int afm) {
-		this.afm = afm;
-	}
-
-	public String getFname() {
-		return fname;
-	}
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-	public String getSname() {
-		return sname;
-	}
-
-	public void setSname(String sname) {
-		this.sname = sname;
 	}
 
 	public String getEmail() {
@@ -99,7 +55,36 @@ public class Client{
 		this.email = email;
 	}
 
-	public int getCredentialsId() {
-		return this.credentials.getId();
+	public String getFirstName() {
+		return firstName;
 	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Set<Car> getTestDriveCars() {
+		return testDriveCars;
+	}
+
+	public void setTestDriveCars(Set<Car> testDriveCars) {
+		this.testDriveCars = testDriveCars;
+	}
+
+	public Set<Car> getBoughtCars() {
+		return boughtCars;
+	}
+
+	public void setBoughtCars(Set<Car> boughtCars) {
+		this.boughtCars = boughtCars;
+	}
+
 }

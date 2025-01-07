@@ -16,8 +16,8 @@ public class Car {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	// gia auto incement id
 	private int id;
+	
 	private String brand;
 	private String model;
 	private String fuel;
@@ -32,6 +32,7 @@ public class Car {
 	
 	@ManyToMany(mappedBy = "boughtCars")
 	private Set<Client> buyers = new HashSet<Client>();
+	
 	//sxesi N-1 me ton pinaka dealership
 	@ManyToOne
 	@JoinColumn(name = "dealership_id")

@@ -47,7 +47,7 @@ public class DealershipService {
 
 	// gia tin dimiourgia object dealership apo to configuration
 	public void addDealership(Dealership dealership) throws Exception {
-		Optional<Dealership> byId = dealerRepo.findById(dealership.getId());
+		Optional<Dealership> byId = dealerRepo.findById(dealership.getAfm());
 		if (!byId.isPresent())
 			dealerRepo.save(dealership);
 	}

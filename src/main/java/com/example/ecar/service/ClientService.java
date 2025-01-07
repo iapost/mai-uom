@@ -69,7 +69,7 @@ public class ClientService {
 
 	// gia tin dimiourgia object client apo to configuration
 	public void addClient(Client c) throws Exception {
-		Optional<Client> byId = clientRepo.findById(c.getId());
+		Optional<Client> byId = clientRepo.findById(c.getAfm());
 		if (!byId.isPresent())
 			clientRepo.save(c);
 	}
