@@ -1,12 +1,14 @@
 package com.example.ecar.model;
 
-import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Reservation {
@@ -18,12 +20,23 @@ public class Reservation {
 	@ManyToOne
 	private Client tester;
 	
-	private Instant time;
+	@Temporal(TemporalType.DATE)
+    Date reservationDay;
+	
+	//0 for first slot etc
+	private int timeslot;
 	
 	@ManyToOne
 	private Car car;
 	
 	public Reservation() {
+	}
+	
+	public Reservation(Client tester, Date reservationDay, int timeslot, Car car) {
+		this.tester = tester;
+		this.reservationDay = reservationDay;
+		this.timeslot = timeslot;
+		this.car = car;
 	}
 	
 	public int getId() {
@@ -42,12 +55,20 @@ public class Reservation {
 		this.tester = tester;
 	}
 
-	public Instant getTime() {
-		return time;
+	public Date getReservationDay() {
+		return reservationDay;
 	}
 
-	public void setTime(Instant time) {
-		this.time = time;
+	public void setReservationDay(Date reservationDay) {
+		this.reservationDay = reservationDay;
+	}
+
+	public int getTimeslot() {
+		return timeslot;
+	}
+
+	public void setTimeslot(int timeslot) {
+		this.timeslot = timeslot;
 	}
 
 	public Car getCar() {

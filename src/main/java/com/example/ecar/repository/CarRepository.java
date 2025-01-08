@@ -26,7 +26,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 	@Modifying
 	@Transactional
 	@Query(
-		"Update Car c " + 
+		"UPDATE Car c " + 
 		"SET c.amount = c.amount - 1 " + 
 		"WHERE c.id = :id " + 
 		"AND c.amount > 0 ")

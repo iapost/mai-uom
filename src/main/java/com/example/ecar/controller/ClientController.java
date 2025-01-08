@@ -1,6 +1,7 @@
 package com.example.ecar.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecar.dto.ReserveCarRequestDto;
 import com.example.ecar.dto.SearchCarRequestDto;
 import com.example.ecar.model.Car;
 import com.example.ecar.service.ClientService;
@@ -38,6 +40,16 @@ public class ClientController {
 	@GetMapping("/buyCar")
 	public void addCar(@RequestParam String token, @RequestParam int id) {
 		clientService.buyCar(token, id);
+	}
+	
+	@GetMapping("/availableSlots")
+	public Set<Integer> getAvailableSlots(@RequestParam String token, @RequestParam int id, @RequestParam String date) {
+		return clientService.getAvailableTimeSlotsForDay(token, id, date);
+	}
+	
+	@PostMapping("/reserveCar")
+	public void reserveCar(@RequestParam String token, @RequestBody ReserveCarRequestDto dto) {
+		clientService.reserveCar(token, dto.carId, dto.date, dto.timeslot);
 	}
 
 }
