@@ -21,6 +21,12 @@ public class DealershipService {
 	@Autowired
 	private DealershipRepository dealershipRepo;
 
+	/**
+	 * Validates token and retrieves the dealership associated with it.
+	 * 
+	 * @param token the dealership token
+	 * @return the dealership
+	 */
 	public Dealership getDealershipByToken(String token) {
 		List<Dealership> dealerList = dealershipRepo.findByToken(token);
 		if (dealerList.size() != 1) {
@@ -29,11 +35,30 @@ public class DealershipService {
 		return dealerList.get(0);
 	}
 
+	/**
+	 * Retrieves the cars that belong to this dealership.
+	 * 
+	 * @param token the token of the dealership
+	 * @return a list of cars belonging to the dealership
+	 */
 	public List<Car> getCars(String token) {
 		Dealership d = getDealershipByToken(token);
 		return d.getCars();
 	}
 
+	/**
+	 * Adds a new car to the dealership.
+	 * 
+	 * @param token  the token of the dealership
+	 * @param brand  the car brand
+	 * @param model  the car model
+	 * @param fuel   the car fuel
+	 * @param engine the car engine
+	 * @param seats  the number of the seats
+	 * @param price  the car price
+	 * @param info   additional information about the car
+	 * @param amount the number of cars available for purchase
+	 */
 	public void addCar(String token, String brand, String model, String fuel, int engine, int seats, double price,
 			String info, int amount) {
 		Dealership d = getDealershipByToken(token);
@@ -42,23 +67,24 @@ public class DealershipService {
 		carRepo.save(newCar);
 	}
 
-	public void updateCar(String token, Car car) {
+	/**
+	 * Update the information of a car.
+	 * 
+	 * @param token        the token of the dealership
+	 * @param newCarValues an object holding the updated values
+	 */
+	public void updateCar(String token, Car newCarValues) {
 		Dealership d = getDealershipByToken(token);
-		for (Car c : d.getCars()) {
-			if (c.getId() == car.getId()) {
-				c.setBrand(car.getBrand());
-				c.setModel(car.getModel());
-				c.setFuel(car.getFuel());
-				c.setEngine(car.getEngine());
-				c.setSeats(car.getSeats());
-				c.setPrice(car.getPrice());
-				c.setInfo(car.getInfo());
-				c.setAmount(car.getAmount());
-				carRepo.save(c);
-				return;
-			}
-		}
-		throw new NotFoundException();
+		Car c = carRepo.findByIdAndDealership(newCarValues.getId(), d).orElseThrow(NotFoundException::new);
+		c.setBrand(newCarValues.getBrand());
+		c.setModel(newCarValues.getModel());
+		c.setFuel(newCarValues.getFuel());
+		c.setEngine(newCarValues.getEngine());
+		c.setSeats(newCarValues.getSeats());
+		c.setPrice(newCarValues.getPrice());
+		c.setInfo(newCarValues.getInfo());
+		c.setAmount(newCarValues.getAmount());
+		carRepo.save(c);
 	}
 
 }

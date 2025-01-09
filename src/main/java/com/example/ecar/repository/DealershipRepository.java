@@ -11,4 +11,5 @@ public interface DealershipRepository extends JpaRepository<Dealership, Integer>
 
 	@Query("SELECT d FROM Dealership d WHERE d.token = :token")
 	List<Dealership> findByToken(String token);
+
 }

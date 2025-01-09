@@ -1,6 +1,7 @@
 package com.example.ecar.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecar.model.Car;
+import com.example.ecar.model.Dealership;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
 	
@@ -31,5 +33,11 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 		"WHERE c.id = :id " + 
 		"AND c.amount > 0 ")
 	int buyCar(int id); 
+	
+	@Query(
+		"SELECT c FROM Car c " + 
+		"WHERE c.id = :id " + 
+		"AND c.dealership = :dealership ")
+	Optional<Car> findByIdAndDealership(int id, Dealership dealership);
 
 }

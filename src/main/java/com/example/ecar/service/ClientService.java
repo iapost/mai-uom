@@ -34,10 +34,21 @@ public class ClientService {
 	@Autowired
 	private ReservationRepository reservationRepo;
 
-	public List<Car> getCars() {
+	/**
+	 * Retrieves all cars.
+	 * 
+	 * @return a list of cars
+	 */
+	public List<Car> getAllCars() {
 		return carRepo.findAll();
 	}
 
+	/**
+	 * Validates token and retrieves the client associated with it.
+	 * 
+	 * @param token the client token
+	 * @return the client
+	 */
 	public Client getClientByToken(String token) {
 		List<Client> clientList = clientRepo.findByToken(token);
 		if (clientList.size() != 1) {
@@ -46,11 +57,31 @@ public class ClientService {
 		return clientList.get(0);
 	}
 
+	/**
+	 * Searches cars with one or more filters. Null parameters are not used in
+	 * search.
+	 * 
+	 * @param brand      the car brand
+	 * @param model      the car model
+	 * @param fuel       the car fuel
+	 * @param seats      the number of car seats
+	 * @param fromPrice  the minimum acceptable price
+	 * @param toPrice    the maximum acceptable price
+	 * @param fromEngine the minimum acceptable engine
+	 * @param toEngine   the maximum acceptable engine
+	 * @return a list of cars matching the criteria
+	 */
 	public List<Car> searchCars(String brand, String model, String fuel, Integer seats, Double fromPrice,
 			Double toPrice, Integer fromEngine, Integer toEngine) {
 		return carRepo.search(brand, model, fuel, seats, fromPrice, toPrice, fromEngine, toEngine);
 	}
 
+	/**
+	 * Purchases a car and decreases the available amount.
+	 * 
+	 * @param token the token of the client making the purchase
+	 * @param id    the id of the car
+	 */
 	public void buyCar(String token, int id) {
 		getClientByToken(token);
 		if (carRepo.buyCar(id) != 1) {
@@ -58,6 +89,20 @@ public class ClientService {
 		}
 	}
 
+	/**
+	 * Returns available time slots for test-drive of a car for a specific day.
+	 * 
+	 * Slots are represented by integers: eg. slot 0 is the first slot of that day
+	 * (09:00 - 09:30), slot 1 is the second slot (09:30 - 10:00) etc.
+	 * 
+	 * Note: we assume there is only one available car of each kind for test-drives
+	 * at a time.
+	 * 
+	 * @param token the token of the client requesting the test-drive
+	 * @param carId the id of the car
+	 * @param day   the day in yyyy-MM-dd format
+	 * @return a list of integers representing the available slots
+	 */
 	public Set<Integer> getAvailableTimeSlotsForDay(String token, int carId, String day) {
 		getClientByToken(token);
 		Car car = carRepo.findById(carId).orElseThrow(NotFoundException::new);
@@ -70,6 +115,22 @@ public class ClientService {
 		return availableSlots;
 	}
 
+	/**
+	 * Makes a reservation for a test drive. This method is synchronized to avoid
+	 * race conditions between checking for availability of the slot and actually
+	 * making the reservation.
+	 * 
+	 * Slots are represented by integers: eg. slot 0 is the first slot of that day
+	 * (09:00 - 09:30), slot 1 is the second slot (09:30 - 10:00) etc.
+	 * 
+	 * Note: we assume there is only one available car of each kind for test-drives
+	 * at a time.
+	 * 
+	 * @param token    the token of the client making the reservation
+	 * @param carId    the car id
+	 * @param day      the day in yyyy-MM-dd format
+	 * @param timeslot the specific slot for that day
+	 */
 	public synchronized void reserveCar(String token, int carId, String day, int timeslot) {
 		Client tester = getClientByToken(token);
 		Car car = carRepo.findById(carId).orElseThrow(NotFoundException::new);
@@ -82,7 +143,14 @@ public class ClientService {
 		}
 		reservationRepo.save(new Reservation(tester, date, timeslot, car));
 	}
-	
+
+	/**
+	 * Helper method to parse a string as Date or throw the proper exception if the
+	 * string is not valid.
+	 * 
+	 * @param source a string of a date in yyyy-MM-dd format
+	 * @return the Date object parsed from the source string
+	 */
 	private Date parseDate(String source) {
 		try {
 			return DATE_FORMATTER.parse(source);

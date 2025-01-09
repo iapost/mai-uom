@@ -34,7 +34,7 @@ public class ClientController {
 	@GetMapping("/getCars")
 	public List<Car> getCars(@RequestParam String token) {
 		clientService.getClientByToken(token);
-		return clientService.getCars();
+		return clientService.getAllCars();
 	}
 
 	@GetMapping("/buyCar")
