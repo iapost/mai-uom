@@ -23,7 +23,6 @@ public class Reservation {
 	@Temporal(TemporalType.DATE)
     Date reservationDay;
 	
-	//0 for first slot etc
 	private int timeslot;
 	
 	@ManyToOne
@@ -78,7 +77,5 @@ public class Reservation {
 	public void setCar(Car car) {
 		this.car = car;
 	}
-	
-	
 
 }

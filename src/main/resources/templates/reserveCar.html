@@ -10,11 +10,7 @@
         </style>
 	</head>
 	<body>
-
-
 		<h1> Επιλεγμένο Αυτοκίνητο</h1>
-
-
 		<table>
 			<tr>
 				<td> Μάρκα: </td>
@@ -22,7 +18,7 @@
 			</tr>
             <tr>
 				<td> Μοντέλο: </td>
-				<td id="model"></td>
+				<td id="model"> </td>
 			</tr>
             <tr>
 				<td> Κινητήρας: </td>
@@ -48,16 +44,13 @@
 				<td> Ποσότητα : </td>
 				<td id="amount"> </td>
 			</tr>
-
 		</table>
 		<p id="carId" style="display:none"></p>
 		<br><br>
 		Enter date to see available slots:
-		<input type='date' id='reserveDay' />
+		<input type='date' id='reserveDay'>
 		<button name='slotSearchButton' onclick="showAvailableSlots();"> Αναζήτηση </button>
-		<table border='1' id='slotsTable'>
-		</table>
-
+		<table border='1' id='slotsTable'></table>
 		<script>
 			const token = new URLSearchParams(window.location.search).get('token');
 			
@@ -132,11 +125,7 @@
 						};
 					})(result[k]);
 				}
-						
 			} 
-		
-			
-
 		</script>	
 	</body>
 </html>

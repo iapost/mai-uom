@@ -20,40 +20,37 @@
 						"email": document.getElementById("email").value,
 				  }),
 				};
-				
 				$.ajax(settings).done(function (response) {
 					console.log("registration success");
 					window.location.href = "/ui/login";
 				});
 			}
-		
 		</script>	
 		<table>
 			<tr>
 				<td> Όνομα: </td>
-				<td> <input type='text' id='fname' />
+				<td> <input type='text' id='fname'> </td>
 			</tr>
 			<tr>
 				<td> Επώνυμο: </td>
-				<td> <input type='text' id='lname' />
+				<td> <input type='text' id='lname'> </td>
 			</tr>
             <tr>
 				<td> ΑΦΜ: </td>
-				<td> <input type='text' id='afm' />
+				<td> <input type='text' id='afm'> </td>
 			</tr>
             <tr>
-				<td> email: </td>
-				<td> <input type='text' id='email' />
+				<td> E-mail: </td>
+				<td> <input type='text' id='email'> </td>
 			</tr>
             <tr>
 				<td> Password: </td>
-				<td> <input type='password' id='password' />
+				<td> <input type='password' id='password'> </td>
 			</tr>
 		</table>
 		<button name='register' onclick="register();">Εγγραφή</button>
 		<div>
 			<p>Είστε εγγεγραμμένος;<a href="/ui/login">Σύνδεση</a></p>
 		</div>		
-
 	</body>
 </html>

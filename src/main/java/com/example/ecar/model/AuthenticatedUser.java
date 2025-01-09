@@ -1,9 +1,12 @@
 package com.example.ecar.model;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AuthenticatedUser {
 	
 	@Id
@@ -44,5 +47,7 @@ public abstract class AuthenticatedUser {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public abstract int getRole();
 
 }

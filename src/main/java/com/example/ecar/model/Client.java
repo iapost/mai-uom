@@ -58,6 +58,10 @@ public class Client extends AuthenticatedUser {
 	public void setReservations(Set<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+	
+	public int getRole() {
+		return 1;
+	}
 
 
 

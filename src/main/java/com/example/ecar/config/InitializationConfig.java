@@ -15,10 +15,10 @@ import com.example.ecar.repository.DealershipRepository;
 public class InitializationConfig implements CommandLineRunner {
 
 	@Autowired
-	DealershipRepository dRepo;
+	DealershipRepository dealershipRepo;
 
 	@Autowired
-	CarRepository cRepo;
+	CarRepository carRepo;
 	
 	@Autowired
 	ClientRepository clientRepo;
@@ -26,19 +26,17 @@ public class InitializationConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Client c1 = new Client(123456789, "123", "Τάσος", "Χρυσοχοΐδης", "mai25067@uom.edu.gr");
-		Client c2 = new Client(987654321, "123", "Γιάννης", "Αποστολάκης", "mai25004@uom.edu.gr");
-		clientRepo.save(c1);
-		clientRepo.save(c2);
+		clientRepo.save(new Client(123456789, "123", "Τάσος", "Χρυσοχοΐδης", "mai25067@uom.edu.gr"));
+		clientRepo.save(new Client(987654321, "123", "Γιάννης", "Αποστολάκης", "mai25004@uom.edu.gr"));
 
 		Dealership d1 = new Dealership(123456781, "123", "Toyta-Κατικαρίδης", "Κώστας Κατικαρίδης");
 		Dealership d2 = new Dealership(987654123, "123", "Citroen-Ασπρόπουλος", "Ιορδάνης Ασπρόπουλος");
 		Dealership d3 = new Dealership(456789123, "123", "Volksvagen-Πετρακάκης", "Γιάννης Πετρακάκης");
 		Dealership d4 = new Dealership(789123456, "123", "Audi-Παπαδόπουλος", "Πέτρος Παπαδόπουλος");
-		dRepo.save(d1);
-		dRepo.save(d2);
-		dRepo.save(d3);
-		dRepo.save(d4);
+		dealershipRepo.save(d1);
+		dealershipRepo.save(d2);
+		dealershipRepo.save(d3);
+		dealershipRepo.save(d4);
 
 		Car car1 = new Car("Volkswagen", "Golf", "Πετρέλαιο", 1400, 5, 18000, "Έκδοση GTI", 3);
 		car1.setDealership(d3);
@@ -64,19 +62,18 @@ public class InitializationConfig implements CommandLineRunner {
 		car11.setDealership(d2);
 		Car car12 = new Car("Citroen", "C3", "Βενζίνη", 1400, 5, 18000, "FullExtra", 1);
 		car12.setDealership(d2);
-		cRepo.save(car1);
-		cRepo.save(car2);
-		cRepo.save(car3);
-		cRepo.save(car4);
-		cRepo.save(car5);
-		cRepo.save(car6);
-		cRepo.save(car7);
-		cRepo.save(car8);
-		cRepo.save(car9);
-		cRepo.save(car10);
-		cRepo.save(car11);
-		cRepo.save(car12);
-
+		carRepo.save(car1);
+		carRepo.save(car2);
+		carRepo.save(car3);
+		carRepo.save(car4);
+		carRepo.save(car5);
+		carRepo.save(car6);
+		carRepo.save(car7);
+		carRepo.save(car8);
+		carRepo.save(car9);
+		carRepo.save(car10);
+		carRepo.save(car11);
+		carRepo.save(car12);
 	}
 
 }

@@ -11,10 +11,8 @@
 	</head>
 	<body onload="showAll();">
 		Dealership Home page
-
 		<button name='addCar' onclick="window.location.href='/ui/addCar?token=' + token;">Προσθήκη Αυτοκινήτου</button>
-				<br><br>
-		
+		<br><br>
 		<table border='1' id='resultsTable'>
 			<tr>
 				<th width='150'> Μάρκα </th>
@@ -27,8 +25,6 @@
 				<th width='150'> Ποσότητα </th>
 			</tr>
 		</table>
-
-		
 		<script>
 			const token = new URLSearchParams(window.location.search).get('token');
 		
@@ -83,10 +79,7 @@
 						};
 					})(car);
 				}
-						
-				} 
-				
+			} 
 		</script>	
-
 	</body>
 </html>

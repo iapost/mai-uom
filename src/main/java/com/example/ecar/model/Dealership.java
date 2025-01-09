@@ -18,7 +18,6 @@ public class Dealership extends AuthenticatedUser {
 	private List<Car> cars = new ArrayList<Car>();
 
 	public Dealership() {
-
 	}
 
 	public Dealership(int afm, String password, String name, String owner) {
@@ -55,6 +54,9 @@ public class Dealership extends AuthenticatedUser {
 		this.cars = cars;
 	}
 	
+	public int getRole() {
+		return 2;
+	}
 	
 
 }

@@ -32,7 +32,6 @@ public class Car {
 	private Dealership dealership;
 
 	public Car() {
-
 	}
 
 	public Car(String brand, String model, String fuel, int engine, int seats, double price, String info, int amount) {
