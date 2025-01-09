@@ -11,6 +11,7 @@
 	</head>
 	<body onload="showAll();">
 		Dealership Home page
+		<button name='logoutButton' onclick="logout();"> Αποσύνδεση χρήστη </button>
 		<button name='addCar' onclick="window.location.href='/ui/addCar?token=' + token;">Προσθήκη Αυτοκινήτου</button>
 		<br><br>
 		<table border='1' id='resultsTable'>
@@ -39,6 +40,17 @@
 				};
 				$.ajax(settings).done(function (response) {
 					updateTable(response);
+				});
+			}
+			
+			function logout() {
+				var settings = {
+					"url": "/logout?token=" + token,
+					"method": "GET",
+					"timeout": 0
+				};
+				$.ajax(settings).done(function (response) {
+					window.location.href = '/ui/login';
 				});
 			}
 

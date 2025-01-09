@@ -51,6 +51,15 @@ public class UserService {
 	}
 
 	/**
+	 * Invalidates the given token.
+	 * 
+	 * @param token the token to invalidate
+	 */
+	public void logout(String token) {
+		authUserRepo.logout(token);
+	}
+
+	/**
 	 * Registers a new client after checking that there is not already a user with
 	 * that afm.
 	 * 

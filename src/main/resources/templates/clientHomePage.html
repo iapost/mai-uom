@@ -12,7 +12,8 @@
 	<body onload="showAll();">
 		
 		Client Home page
-
+		<button name='logoutButton' onclick="logout();"> Αποσύνδεση χρήστη </button>
+		<br><br>
 		<table>
 			<tr>
 				<td> Μάρκα: </td>
@@ -49,7 +50,6 @@
 		</table>
 
 		<button name='searchButton' onclick="searchCar();"> Αναζήτηση </button>
-
 		<table border='1' id='resultsTable'>
 			<tr>
 				<th width='150'> Μάρκα </th>
@@ -76,6 +76,17 @@
 			};
 			$.ajax(settings).done(function (response) {
 				updateTable(response);
+			});
+		}
+		
+		function logout() {
+			var settings = {
+				"url": "/logout?token=" + token,
+				"method": "GET",
+				"timeout": 0
+			};
+			$.ajax(settings).done(function (response) {
+				window.location.href = '/ui/login';
 			});
 		}
 
