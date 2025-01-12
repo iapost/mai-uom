@@ -5,7 +5,7 @@
 		<link th:href="@{/clientHome.css}" rel="stylesheet">
 		<!--<link rel="stylesheet" href="C:\Users\Tasos\eclipse-workspace\mai-uom\src\main\resources\static\clientHome.css">-->
 	</head>
-	<body onload="showAll();">
+	<body>
 		<div class="popup" id="successPopup"></div>
 		<div class="header">
 			<button id ="logoutBtn" name='logoutButton' onclick="logout();"> Αποσύνδεση </button>
@@ -57,8 +57,6 @@
 				<button name='searchButton' id="searchBtn" onclick="searchCar();"> Αναζήτηση </button>
 			</div>
 		</br>
-			<hr>
-		</br>
 						<table border='1' id='resultsTable'>
 							<tr>
 								<th width='150'> Μάρκα </th>
@@ -73,7 +71,6 @@
 						</table>
 
 			</div>
-		<br><br>
 		<div class="footer"></div>
 
 	</body>
