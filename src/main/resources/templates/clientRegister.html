@@ -2,8 +2,51 @@
 
 <html>
 	<head>
+		<link th:href="@{/login-reg.css}" rel="stylesheet">
+		<!--<link rel="stylesheet" href="C:\Users\Tasos\eclipse-workspace\mai-uom\src\main\resources\static\login-reg.css">-->
 	</head>
 	<body>
+		
+		<div class="header"></div>
+		<div class="main">
+		</br>
+			<h2>Εγγραφή Πελάτη</h2>
+		</br>
+			<div class="mainContainer">
+				<div class="form">
+					<table>
+						<tr>
+							<td> Όνομα: </td>
+							<td> <input type='text' id='fname'> </td>
+						</tr>
+						<tr>
+							<td> Επώνυμο: </td>
+							<td> <input type='text' id='lname'> </td>
+						</tr>
+						<tr>
+							<td> ΑΦΜ: </td>
+							<td> <input type='text' id='afm'> </td>
+						</tr>
+						<tr>
+							<td> E-mail: </td>
+							<td> <input type='text' id='email'> </td>
+						</tr>
+						<tr>
+							<td> Password: </td>
+							<td> <input type='password' id='password'> </td>
+						</tr>
+					</table>
+					</br>
+					<button name='register' onclick="register();">Εγγραφή</button>
+					</br></br>
+					<div>
+						<p>Είστε εγγεγραμμένος;<a href="/ui/login">Σύνδεση</a></p>
+					</div>	
+				</div>
+			</div>	
+		</div>
+		<div class="footer"></div>
+		
 		<script>
 			function register(){				
 				var settings = {
@@ -21,36 +64,11 @@
 				  }),
 				};
 				$.ajax(settings).done(function (response) {
-					console.log("registration success");
+					sessionStorage.setItem("registrationSuccess", "Ο χρήστης δημιουργήθηκε!");
 					window.location.href = "/ui/login";
 				});
 			}
 		</script>	
-		<table>
-			<tr>
-				<td> Όνομα: </td>
-				<td> <input type='text' id='fname'> </td>
-			</tr>
-			<tr>
-				<td> Επώνυμο: </td>
-				<td> <input type='text' id='lname'> </td>
-			</tr>
-            <tr>
-				<td> ΑΦΜ: </td>
-				<td> <input type='text' id='afm'> </td>
-			</tr>
-            <tr>
-				<td> E-mail: </td>
-				<td> <input type='text' id='email'> </td>
-			</tr>
-            <tr>
-				<td> Password: </td>
-				<td> <input type='password' id='password'> </td>
-			</tr>
-		</table>
-		<button name='register' onclick="register();">Εγγραφή</button>
-		<div>
-			<p>Είστε εγγεγραμμένος;<a href="/ui/login">Σύνδεση</a></p>
-		</div>		
+			
 	</body>
 </html>

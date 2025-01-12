@@ -2,8 +2,62 @@
 
 <html>
 	<head>
+		<head>
+			<link th:href="@{/create-view-update.css}" rel="stylesheet">
+			<!--<link rel="stylesheet" href="C:\Users\Tasos\eclipse-workspace\mai-uom\src\main\resources\static\create-view-update.css">-->
+		</head>
 	</head>
 	<body>
+
+		<div class="header">
+			<button id ="logoutBtn" name='logoutButton' onclick="logout();"> Αποσύνδεση </button>
+		</div>
+
+		</br>
+		<h1> Προσθήκη Αυτοκινήτου</h1>
+		<div class="main">
+			<div class="form">
+				<table>
+					<tr>
+						<td> Μάρκα: </td>
+						<td> <input type='text' id='brand'> </td>
+					</tr>
+					<tr>
+						<td> Μοντέλο: </td>
+						<td> <input type='text' id='model'> </td>
+					</tr>
+					<tr>
+						<td> Κινητήρας: </td>
+						<td> <input type='number' id='engine'> </td>
+					</tr>
+					<tr>
+						<td> Καύσιμο: </td>
+						<td> <input type='text' id='fuel'> </td>
+					</tr>
+					<tr>
+						<td> Θέσεις: </td>
+						<td> <input type='number' id='seats'> </td>
+					</tr>
+					<tr>
+						<td> Πληροφορίες: </td>
+						<td> <input type='text' id='info'> </td>
+					</tr>
+					<tr>
+						<td> Τιμή: </td>
+						<td> <input type='number' id='price'> </td>
+					</tr>
+					<tr>
+						<td> Ποσότητα : </td>
+						<td> <input type='number' id='amount'> </td>
+					</tr>
+				</table>
+			</div>
+			<div class="btnContainer">
+				<button class ="btn" name='create' onclick="addCar();">Προσθήκη</button>
+				<button class ="btn" onclick="back();">Πίσω</button>
+			</div>
+			</div>
+			<div class="footer"></div>
 		<script>
 			const token = new URLSearchParams(window.location.search).get('token');
 		
@@ -26,45 +80,25 @@
 				  }),
 				};
 				$.ajax(settings).done(function (response) {
-                    alert("Car Added")
+					sessionStorage.setItem("success", "Το αυτοκίνητο προστέθηκε!");
 					window.location.href = "/ui/dealershipHomePage?token=" + token;
 				});
 			}
+
+			function logout() {
+			var settings = {
+				"url": "/logout?token=" + token,
+				"method": "GET",
+				"timeout": 0
+			};
+			$.ajax(settings).done(function (response) {
+				window.location.href = '/ui/login';
+			});
+		}
+
+			function back(){
+				window.location.href = '/ui/dealershipHomePage?token=' + token;
+			}
 		</script>	
-		<table>
-			<tr>
-				<td> Μάρκα: </td>
-				<td> <input type='text' id='brand'> </td>
-			</tr>
-            <tr>
-				<td> Μοντέλο: </td>
-				<td> <input type='text' id='model'> </td>
-			</tr>
-            <tr>
-				<td> Κινητήρας: </td>
-				<td> <input type='number' id='engine'> </td>
-			</tr>
-            <tr>
-				<td> Καύσιμο: </td>
-				<td> <input type='text' id='fuel'> </td>
-			</tr>
-            <tr>
-				<td> Θέσεις: </td>
-				<td> <input type='number' id='seats'> </td>
-			</tr>
-            <tr>
-				<td> Πληροφορίες: </td>
-				<td> <input type='text' id='info'> </td>
-			</tr>
-            <tr>
-				<td> Τιμή: </td>
-				<td> <input type='number' id='price'> </td>
-			</tr>
-            <tr>
-				<td> Ποσότητα : </td>
-				<td> <input type='number' id='amount'> </td>
-			</tr>
-		</table>
-		<button name='create' onclick="addCar();">Προσθήκη</button>
 	</body>
 </html>

@@ -2,72 +2,97 @@
 
 <html>
 	<head>
-		<style>
-            #resultsTable tr:hover {
-                background-color: #f1f1f1;
-                cursor: pointer;
-            }
-        </style>
+		<link th:href="@{/clientHome.css}" rel="stylesheet">
+		<!--<link rel="stylesheet" href="C:\Users\Tasos\eclipse-workspace\mai-uom\src\main\resources\static\clientHome.css">-->
 	</head>
 	<body onload="showAll();">
-		
-		Client Home page
-		<button name='logoutButton' onclick="logout();"> Αποσύνδεση χρήστη </button>
-		<br><br>
-		<table>
-			<tr>
-				<td> Μάρκα: </td>
-				<td> <input type='text' id='brand'> </td>
-			</tr>
-			<tr>
-				<td> Μοντέλο: </td>
-				<td> <input type='text' id='model'> </td>
-			</tr>
-			<tr>
-				<td> Ελάχιστη Τιμή: </td>
-				<td> <input type='number' id='fromPrice'> </td>
-			</tr>
-			<tr>
-				<td> Μέγιστη Τιμή: </td>
-				<td> <input type='number' id='toPrice'> </td>
-			</tr>
-			<tr>
-				<td> Ελάχιστος κινητήρας: </td>
-				<td> <input type='number' id='fromEngine'> </td>
-			</tr>
-			<tr>
-				<td> Μέγιστος κινητήρας: </td>
-				<td> <input type='number' id='toEngine'> </td>
-			</tr>
-			<tr>
-				<td> Καύσιμο: </td>
-				<td> <input type='text' id='fuel'> </td>
-			</tr>
-			<tr>
-				<td> Θέσεις: </td>
-				<td> <input type='number' id='seats'> </td>
-			</tr>
-		</table>
+		<div class="popup" id="successPopup"></div>
+		<div class="header">
+			<button id ="logoutBtn" name='logoutButton' onclick="logout();"> Αποσύνδεση </button>
+		</div>
+			<div class="main">
+				<div class="searchContainer">
+					<table>
+						<tr>
+							<td> Μάρκα: </td>
+							<td> <input type='text' id='brand'> </td>
+						</tr>
+						<tr>
+							<td> Μοντέλο: </td>
+							<td> <input type='text' id='model'> </td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td> Τιμή Από: </td>
+							<td> <input type='number' id='fromPrice'> </td>
+						</tr>
+						<tr>
+							<td> Τιμή Έως: </td>
+							<td> <input type='number' id='toPrice'> </td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td> Κινητήρας Από: </td>
+							<td> <input type='number' id='fromEngine'> </td>
+						</tr>
+						<tr>
+							<td> Κινητήρας Έως: </td>
+							<td> <input type='number' id='toEngine'> </td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td> Καύσιμο: </td>
+							<td> <input type='text' id='fuel'> </td>
+						</tr>
+						<tr>
+							<td> Θέσεις: </td>
+							<td> <input type='number' id='seats'> </td>
+						</tr>
+					</table>
+				</div>
+			<div>
+				<button name='searchButton' id="searchBtn" onclick="searchCar();"> Αναζήτηση </button>
+			</div>
+		</br>
+			<hr>
+		</br>
+						<table border='1' id='resultsTable'>
+							<tr>
+								<th width='150'> Μάρκα </th>
+								<th width='150'> Μοντέλο </th>
+								<th width='150'> Καύσιμο </th>
+								<th width='150'> Κινητήρας </th>
+								<th width='150'> Θέσεις </th>
+								<th width='150'> Πληροφορίες </th>
+								<th width='150'> Τιμή </th>
+								<th width='150'> Ποσότητα </th>
+							</tr>
+						</table>
 
-		<button name='searchButton' onclick="searchCar();"> Αναζήτηση </button>
-		<table border='1' id='resultsTable'>
-			<tr>
-				<th width='150'> Μάρκα </th>
-				<th width='150'> Μοντέλο </th>
-				<th width='150'> Καύσιμο </th>
-				<th width='150'> Κινητήρας </th>
-				<th width='150'> Θέσεις </th>
-				<th width='150'> Πληροφορίες </th>
-				<th width='150'> Τιμή </th>
-				<th width='150'> Ποσότητα </th>
-			</tr>
-		</table>
+			</div>
+		<br><br>
+		<div class="footer"></div>
 
 	</body>
 
 	<script>
 		const token = new URLSearchParams(window.location.search).get('token');
 	
+		const successMessage = sessionStorage.getItem("success");
+    	if (successMessage) {
+        const popup = document.getElementById("successPopup");
+        popup.textContent = successMessage;
+        popup.style.display = "block"; 
+
+        setTimeout(() => {
+            popup.style.display = "none"; 
+            sessionStorage.removeItem("success");
+        }, 2000);
+    }
+    	
 		function showAll() {
 			var settings = {
 				"url": "/client/getCars?token=" + token,

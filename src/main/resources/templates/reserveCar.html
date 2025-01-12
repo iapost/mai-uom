@@ -2,55 +2,64 @@
 
 <html>
 	<head>
-		<style>
-            #slotsTable tr:hover {
-                background-color: #f1f1f1;
-                cursor: pointer;
-            }
-        </style>
+		<link th:href="@{/reserve.css}" rel="stylesheet">
+		<!--<link rel="stylesheet" href="C:\Users\Tasos\eclipse-workspace\mai-uom\src\main\resources\static\reserve.css">-->
 	</head>
 	<body>
-		<h1> Επιλεγμένο Αυτοκίνητο</h1>
-		<table>
-			<tr>
-				<td> Μάρκα: </td>
-				<td id ="brand"></td>
-			</tr>
-            <tr>
-				<td> Μοντέλο: </td>
-				<td id="model"> </td>
-			</tr>
-            <tr>
-				<td> Κινητήρας: </td>
-				<td id="engine"> </td>
-			</tr>
-            <tr>
-				<td> Καύσιμο: </td>
-				<td id="fuel"> </td>
-			</tr>
-            <tr>
-				<td> Θέσεις: </td>
-				<td id="seats"> </td>
-			</tr>
-            <tr>
-				<td> Πληροφορίες: </td>
-				<td id="info"> </td>
-			</tr>
-            <tr>
-				<td> Τιμή: </td>
-				<td id="price"> </td>
-			</tr>
-            <tr>
-				<td> Ποσότητα : </td>
-				<td id="amount"> </td>
-			</tr>
-		</table>
-		<p id="carId" style="display:none"></p>
-		<br><br>
-		Enter date to see available slots:
-		<input type='date' id='reserveDay'>
-		<button name='slotSearchButton' onclick="showAvailableSlots();"> Αναζήτηση </button>
+
+		<div class="header">
+			<button id ="logoutBtn" name='logoutButton' onclick="logout();"> Αποσύνδεση </button>
+		</div>
+	</br>
+	<h1> Επιλεγμένο Αυτοκίνητο</h1>
+	<div class="main">
+		<div class="form">
+			<table>
+				<tr>
+					<td> Μάρκα: </td>
+					<td id ="brand"></td>
+				</tr>
+				<tr>
+					<td> Μοντέλο: </td>
+					<td id="model"> </td>
+				</tr>
+				<tr>
+					<td> Κινητήρας: </td>
+					<td id="engine"> </td>
+				</tr>
+				<tr>
+					<td> Καύσιμο: </td>
+					<td id="fuel"> </td>
+				</tr>
+				<tr>
+					<td> Θέσεις: </td>
+					<td id="seats"> </td>
+				</tr>
+				<tr>
+					<td> Πληροφορίες: </td>
+					<td id="info"> </td>
+				</tr>
+				<tr>
+					<td> Τιμή: </td>
+					<td id="price"> </td>
+				</tr>
+				<tr>
+					<td> Ποσότητα : </td>
+					<td id="amount"> </td>
+				</tr>
+			</table>
+			<p id="carId" style="display:none"></p>
+		</div>
+		<div class="searchSlots">
+		Εισάγετε ημερομηνία για να δείτε διαθεσιμότητα: <input type='date' id='reserveDay'>
+		<button class="btn" name='slotSearchButton' onclick="showAvailableSlots();"> Αναζήτηση </button>
+		<button class ="btn" onclick="back();">Πίσω</button>
 		<table border='1' id='slotsTable'></table>
+		</div>
+	</div>
+	
+
+	<div class="footer"></div>
 		<script>
 			const token = new URLSearchParams(window.location.search).get('token');
 			
@@ -81,6 +90,26 @@
 					updateSlotsTable(response);
 				});
 			}
+
+			function back(){
+				window.location.href = '/ui/clientHomePage?token=' + token;
+			}
+
+			function logout() {
+			var settings = {
+				"url": "/logout?token=" + token,
+				"method": "GET",
+				"timeout": 0
+			};
+			$.ajax(settings).done(function (response) {
+				window.location.href = '/ui/login';
+			});
+		}
+			
+			function back(){
+				window.location.href = '/ui/clientHomePage?token=' + token;
+			}
+			
 			
 			function updateSlotsTable(result) {
 				var startDate = document.getElementById('reserveDay').value + 'T09:00:00';
@@ -120,12 +149,15 @@
 							  }),
 							};
 							$.ajax(settings).done(function (response) {
+								sessionStorage.setItem("success", "Το ραντεβού Test Drive κατοχυρώθηκε");
 								window.location.href = '/ui/clientHomePage?token=' + token;
 							});
 						};
 					})(result[k]);
 				}
 			} 
+
+			
 		</script>	
 	</body>
 </html>

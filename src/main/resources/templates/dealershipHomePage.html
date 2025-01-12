@@ -2,32 +2,47 @@
 
 <html>
 	<head>
-		<style>
-            #resultsTable tr:hover {
-                background-color: #f1f1f1;
-                cursor: pointer;
-            }
-        </style>
+		<link th:href="@{/dealershipHome.css}" rel="stylesheet">
+		<!--<link rel="stylesheet" href="C:\Users\Tasos\eclipse-workspace\mai-uom\src\main\resources\static\dealershipHome.css">-->
 	</head>
 	<body onload="showAll();">
-		Dealership Home page
-		<button name='logoutButton' onclick="logout();"> Αποσύνδεση χρήστη </button>
-		<button name='addCar' onclick="window.location.href='/ui/addCar?token=' + token;">Προσθήκη Αυτοκινήτου</button>
-		<br><br>
-		<table border='1' id='resultsTable'>
-			<tr>
-				<th width='150'> Μάρκα </th>
-				<th width='150'> Μοντέλο </th>
-				<th width='150'> Καύσιμο </th>
-				<th width='150'> Κινητήρας </th>
-				<th width='150'> Θέσεις </th>
-				<th width='150'> Πληροφορίες </th>
-				<th width='150'> Τιμή </th>
-				<th width='150'> Ποσότητα </th>
-			</tr>
-		</table>
+		<div class="popup" id="successPopup"></div>
+		<div class="header">
+			<button id ="logoutBtn" name='logoutButton' onclick="logout();"> Αποσύνδεση </button>
+		</div>
+		<div class="main">
+				<h2>Αντιπροσωπεία </h2>
+				<hr>
+				<table border='1' id='resultsTable'>
+					<tr>
+						<th width='150'> Μάρκα </th>
+						<th width='150'> Μοντέλο </th>
+						<th width='150'> Καύσιμο </th>
+						<th width='150'> Κινητήρας </th>
+						<th width='150'> Θέσεις </th>
+						<th width='150'> Πληροφορίες </th>
+						<th width='150'> Τιμή </th>
+						<th width='150'> Ποσότητα </th>
+					</tr>
+				</table>
+			</br>
+				<button id="addCarBtn" name='addCar' onclick="window.location.href='/ui/addCar?token=' + token;">Προσθήκη Αυτοκινήτου</button>
+		</div>
+		<div class="footer"></div>
 		<script>
 			const token = new URLSearchParams(window.location.search).get('token');
+
+			const successMessage = sessionStorage.getItem("success");
+        	if (successMessage) {
+            const popup = document.getElementById("successPopup");
+            popup.textContent = successMessage;
+            popup.style.display = "block"; 
+
+            setTimeout(() => {
+                popup.style.display = "none"; 
+                sessionStorage.removeItem("success");
+            }, 2000);
+        }
 		
 			function showAll() {
 				var settings = {
