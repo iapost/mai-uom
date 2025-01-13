@@ -85,6 +85,13 @@
 				$.ajax(settings).done(function (response) {
 					sessionStorage.setItem("success", "Η αγορά πραγματοποιήθηκε");
 					window.location.href = '/ui/clientHomePage?token=' + token;
+				})
+				.fail(function (jqXHR){
+					if(jqXHR.status == 400){
+						alert('Έχουν τελειώσει τα διαθέσιμα αυτοκίνητα.');
+					} else {
+						alert("Σφάλμα " + jqXHR.statusText);
+					}
 				});
 			};
 			

@@ -66,6 +66,13 @@
 				$.ajax(settings).done(function (response) {
 					sessionStorage.setItem("registrationSuccess", "Ο χρήστης δημιουργήθηκε!");
 					window.location.href = "/ui/login";
+				})
+				.fail(function (jqXHR){
+					if(jqXHR.status == 409){
+						alert('Ο χρήστης με αυτόν τον ΑΦΜ υπάρχει ήδη.');
+					} else {
+						alert("Σφάλμα " + jqXHR.statusText);
+					}
 				});
 			}
 		</script>	
