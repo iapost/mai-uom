@@ -21,7 +21,7 @@ public class Reservation {
 	private Client tester;
 	
 	@Temporal(TemporalType.DATE)
-    Date reservationDay;
+    private Date reservationDay;
 	
 	private int timeslot;
 	
