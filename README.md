@@ -12,6 +12,8 @@ Then, simply visit [http://localhost:8080](http://localhost:8080) with a browser
 
 This project uses the H2 in-memory database, so there is no need to setup an external database.
 
+Visit [http://localhost:8080/openapi](http://localhost:8080/openapi) for the OpenAPI specification of the project.
+
 ### Initial accounts
 
 For testing convenience we provide the following already initialized accounts:
