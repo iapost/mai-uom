@@ -26,8 +26,8 @@ public class InitializationConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		clientRepo.save(new Client(123456789, "123", "Τάσος", "Χρυσοχοΐδης", "mai25067@uom.edu.gr"));
-		clientRepo.save(new Client(987654321, "123", "Γιάννης", "Αποστολάκης", "mai25004@uom.edu.gr"));
+		clientRepo.save(new Client(123456789, "123", "John", "Doe", "mymail@gmail.com"));
+		clientRepo.save(new Client(987654321, "123", "Jane", "Doe", "test@gmail.com"));
 
 		Dealership d1 = new Dealership(123456781, "123", "Toyta-Κατικαρίδης", "Κώστας Κατικαρίδης");
 		Dealership d2 = new Dealership(987654123, "123", "Citroen-Ασπρόπουλος", "Ιορδάνης Ασπρόπουλος");
