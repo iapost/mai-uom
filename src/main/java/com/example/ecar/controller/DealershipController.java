@@ -2,7 +2,10 @@ package com.example.ecar.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,9 +31,10 @@ public class DealershipController {
 		return dealershipService.getCars(token);
 	}
 
-	@PostMapping("/addCar")
-	public void addCar(@RequestParam String token, @RequestBody AddCarRequestDto dto) {
+	@PostMapping("/addCar")	
+	public ResponseEntity<String> addCar(@RequestParam String token, @Valid @RequestBody AddCarRequestDto dto) {
 		dealershipService.addCar(token, dto.brand, dto.model, dto.fuel, dto.engine, dto.seats, dto.price, dto.info, dto.amount);
+		return ResponseEntity.ok("Το αυτοκίνητο προστέθηκε!");
 	}
 
 	@PostMapping("/updateCar")

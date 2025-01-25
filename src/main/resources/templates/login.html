@@ -62,6 +62,7 @@
 				  }),
 				};
 				$.ajax(settings).done(function (response) {
+					console.log(response);
 					if(response.role === 1){
 						window.location.href = "/ui/clientHomePage?token=" + response.token
 					}
@@ -71,6 +72,9 @@
 					else{
 						alert("Δώσατε λάθος διαπιστευτήρια. Προσπαθήστε ξανά");
 					} 
+				})
+				.fail(function (xhr, status, error) {					
+					alert(xhr.responseText); 
 				});
 			}
 			

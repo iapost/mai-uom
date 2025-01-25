@@ -1,6 +1,9 @@
 package com.example.ecar.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,13 +35,15 @@ public class UserController {
 	}
 
 	@PostMapping("/clientRegister")
-	public void clientRegister(@RequestBody ClientRegisterRequestDto dto) {
+	public ResponseEntity<String> clientRegister(@Valid @RequestBody ClientRegisterRequestDto dto) {
 		userService.clientRegister(dto.afm, dto.password, dto.firstName, dto.lastName, dto.email);
+		return ResponseEntity.ok("Ο χρήστης δημιουργήθηκε");
 	}
 
 	@PostMapping("/dealershipRegister")
-	public void dealershipRegister(@RequestBody DealershipRegisterRequestDto dto) {
+	public  ResponseEntity<String> dealershipRegister(@Valid @RequestBody DealershipRegisterRequestDto dto) {
 		userService.dealershipRegister(dto.afm, dto.password, dto.name, dto.owner);
+		return ResponseEntity.ok("Ο χρήστης δημιουργήθηκε");
 	}
 
 }
