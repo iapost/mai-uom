@@ -32,9 +32,9 @@ public class DealershipController {
 	}
 
 	@PostMapping("/addCar")	
-	public ResponseEntity<String> addCar(@RequestParam String token, @Valid @RequestBody AddCarRequestDto dto) {
+	public String addCar(@RequestParam String token, @Valid @RequestBody AddCarRequestDto dto) {
 		dealershipService.addCar(token, dto.brand, dto.model, dto.fuel, dto.engine, dto.seats, dto.price, dto.info, dto.amount);
-		return ResponseEntity.ok("Το αυτοκίνητο προστέθηκε!");
+		return "Το αυτοκίνητο προστέθηκε!";
 	}
 
 	@PostMapping("/updateCar")

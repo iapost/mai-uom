@@ -20,12 +20,12 @@ public class AddCarRequestDto {
 	@Min(value=1, message="Ο αριθμός θέσεων είναι υποχρεωτικός με ελάχιστη τιμή 1")
 	public int seats;
 	
-	@Min(value=0, message="Η τιμή είναι υποχρεωτική με ελάχιστη τιμή 0")
+	@Min(value=1, message="Η τιμή είναι υποχρεωτική με ελάχιστη τιμή 1")
 	public double price;
 	
 	public String info;
 	
-	@Min(value=0, message="Ο αριθμός διαθεσιμότητας είναι υποχρεωτικός με ελάχιστη τιμή 0")
+	@Min(value=1, message="Ο αριθμός διαθεσιμότητας είναι υποχρεωτικός με ελάχιστη τιμή 1")
 	@Max(value=20000, message="Ο αριθμός διαθεσιμότητας είναι υποχρεωτικός με μέγιστη τιμή 20000")
 	public int amount;
 }

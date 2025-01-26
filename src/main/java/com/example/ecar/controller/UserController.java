@@ -35,15 +35,15 @@ public class UserController {
 	}
 
 	@PostMapping("/clientRegister")
-	public ResponseEntity<String> clientRegister(@Valid @RequestBody ClientRegisterRequestDto dto) {
+	public String clientRegister(@Valid @RequestBody ClientRegisterRequestDto dto) {
 		userService.clientRegister(dto.afm, dto.password, dto.firstName, dto.lastName, dto.email);
-		return ResponseEntity.ok("Ο χρήστης δημιουργήθηκε");
+		return "Ο χρήστης δημιουργήθηκε";
 	}
 
 	@PostMapping("/dealershipRegister")
-	public  ResponseEntity<String> dealershipRegister(@Valid @RequestBody DealershipRegisterRequestDto dto) {
+	public String dealershipRegister(@Valid @RequestBody DealershipRegisterRequestDto dto) {
 		userService.dealershipRegister(dto.afm, dto.password, dto.name, dto.owner);
-		return ResponseEntity.ok("Ο χρήστης δημιουργήθηκε");
+		return "Ο χρήστης δημιουργήθηκε";
 	}
 
 }
