@@ -26,7 +26,7 @@
 					</tr>
 					<tr>
 						<td>ΑΦΜ:</td>
-						<td><input type='text' id='afm'></td>
+						<td><input type='number' id='afm'></td>
 					</tr>
 					<tr>
 						<td colspan="2" id=afmError style="color: red;"></td>
@@ -86,25 +86,24 @@
 				}),
 			};
 			$.ajax(settings).done(
-					function(response) {
-						sessionStorage.setItem("registrationSuccess",
-								response);
-						window.location.href = "/ui/login";
-					})
-					.fail(function (xhr, status, error) {
-					if(xhr.status === 409){
+				function (response) {
+					sessionStorage.setItem("registrationSuccess",
+							response);
+					window.location.href = "/ui/login";
+				})
+				.fail(function (xhr, status, error) {
+					if(xhr.status === 409) {
 						alert(xhr.responseText);
-						
-					} else{
-					const errors = xhr.responseJSON;
-					 for (const [field, message] of Object.entries(errors)) {
-                         const errorElement = document.getElementById(`${field}Error`);
-                         if (errorElement) {
-                             errorElement.textContent = message;
-                         }
-                     }
-				}
-			});
+					} else {
+						const errors = xhr.responseJSON;
+						for (const [field, message] of Object.entries(errors)) {
+						    const errorElement = document.getElementById(`${field}Error`);
+						    if (errorElement) {
+						        errorElement.textContent = message;
+						    }
+						}
+					}
+				});
 		}
 	</script>
 </body>
